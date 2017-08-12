@@ -1,6 +1,8 @@
 package cs544.edu.reservations;
 
-import com.sun.tools.javac.util.List;
+
+import java.util.List;
+
 import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 
