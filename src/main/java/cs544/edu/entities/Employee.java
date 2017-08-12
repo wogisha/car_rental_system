@@ -16,6 +16,15 @@ public class Employee {
     private String address;
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    private boolean enabled = true;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public long getId() {
         return id;
