@@ -1,8 +1,11 @@
 package cs544.edu.reservations;
 
-import com.sun.tools.javac.util.List;
+
 import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
