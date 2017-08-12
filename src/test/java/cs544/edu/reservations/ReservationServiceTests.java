@@ -1,16 +1,15 @@
 package cs544.edu.reservations;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
-import cs544.edu.CarRentalSystemApplication;
 import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 import cs544.edu.entities.enums.ReservationStatus;
 import cs544.edu.userMgmt.CustomerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.ListableBeanFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -53,22 +52,22 @@ public class ReservationServiceTests {
     }
 
     @Test
-    public void testReservationCancelled(){
+    public void testReservationCancelled() {
         Reservation reservation = createReservation();
 
         reservationService.makeReservation(reservation, 1L);
-        assertEquals(reservation.getStatus(),ReservationStatus.NEW);
+        assertEquals(reservation.getStatus(), ReservationStatus.NEW);
 
         reservationService.cancelReservation(reservation.getId());
 
         Reservation reservationCancelled = reservationService.getById(reservation.getId());
 
-        assertEquals(reservationCancelled.getStatus(),ReservationStatus.CANCELLED);
+        assertEquals(reservationCancelled.getStatus(), ReservationStatus.CANCELLED);
 
     }
 
     @Test
-    public void testReservationUpdated(){
+    public void testReservationUpdated() {
         Reservation reservation = createReservation();
 
         reservationService.makeReservation(reservation, 1L);
@@ -79,22 +78,19 @@ public class ReservationServiceTests {
 
         Reservation reservationUpdated = reservationService.getById(reservation.getId());
 
-        assertEquals(reservationUpdated.getStatus(),ReservationStatus.COMPLETED);
+        assertEquals(reservationUpdated.getStatus(), ReservationStatus.COMPLETED);
     }
 
 
     @Test
-    public void testGetReservationsByCustomerId(){
-
-
+    public void testGetReservationsByCustomerId() {
         Customer customer = new Customer();
 
         customerRepository.save(customer);
 
-
         List<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId());
 
-        assertEquals(reservationList.size(),0);
+        assertEquals(reservationList.size(), 0);
 
         Reservation reservation = createReservation();
 
@@ -102,10 +98,7 @@ public class ReservationServiceTests {
 
         reservationList = reservationService.getCustomerReservations(customer.getId());
 
-        assertEquals(reservationList.size(),1);
-
-
-
+        assertEquals(reservationList.size(), 1);
     }
 
 }
