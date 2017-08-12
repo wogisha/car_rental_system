@@ -25,6 +25,7 @@ public class Reservation {
     private Rent rent;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "reservationStatus")
     private ReservationStatus status;
 
     public long getId() {

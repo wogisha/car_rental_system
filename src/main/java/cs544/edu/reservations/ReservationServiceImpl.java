@@ -10,7 +10,10 @@ import cs544.edu.entities.enums.ReservationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
@@ -31,7 +34,7 @@ public class ReservationServiceImpl implements ReservationService {
     public void makeReservation(Reservation reservation, Long customerId) {
         Customer customer = new Customer();
         customer.setId(customerId);
-        reservation.setCustomer(customer);
+//        reservation.setCustomer(customer);
         reservation.setStatus(ReservationStatus.NEW);
         reservationRepository.save(reservation);
     }
