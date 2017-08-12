@@ -26,7 +26,7 @@ public class VehicleController {
 //	@Autowired
 //	private VehicleTypeService vehicleTypeService;
 	
-	@RequestMapping({ "/", "/welcome" })
+	@RequestMapping({ "", "/welcome" })
 	public String welcome(Model model) {
 
 		model.addAttribute("greeting", "Welcome to our Car Reservation System!!");

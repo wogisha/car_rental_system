@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class MainController {
-    @RequestMapping
+    @RequestMapping("/")
     public String mainPage(){
-        return "redirect:/vechiles";
+        return "redirect:/vehicles";
     }
 }
