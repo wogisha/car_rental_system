@@ -8,7 +8,7 @@ public class Reservation {
     @Id
     @GeneratedValue
     private long id;
-
+    
     private Date pickupDate;
     private Date returnDate;
     private Date reservationDate;

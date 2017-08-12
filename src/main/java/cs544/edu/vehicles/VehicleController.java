@@ -18,7 +18,6 @@ import cs544.edu.vehicles.services.VehicleService;
 import cs544.edu.vehicles.services.VehicleTypeService; */
 
 @Controller
-@RequestMapping("/vehicles")
 public class VehicleController {
 
 //	@Autowired
