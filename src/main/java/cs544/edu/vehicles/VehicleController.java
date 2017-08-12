@@ -36,7 +36,7 @@ public class VehicleController {
 	public String getAddNewProductForm(Model model) {
 		Vehicle vehicle = new Vehicle();
 		model.addAttribute("newVehicle", vehicle);
-		model.addAttribute("types", vehicleTypeService.findAll());
+
 		
 		return "vehicles/addVehicle";
 	}

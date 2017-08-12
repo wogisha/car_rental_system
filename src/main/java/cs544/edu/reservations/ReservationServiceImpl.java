@@ -22,6 +22,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+
+
+    @Override
     public void makeReservation(Reservation reservation, Long customerId) {
         Customer customer = new Customer();
         customer.setId(customerId);
