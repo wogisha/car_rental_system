@@ -1,5 +1,6 @@
 package cs544.edu.reservations;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import cs544.edu.CarRentalSystemApplication;
@@ -13,9 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -25,24 +24,27 @@ public class ReservationServiceTests {
     private ReservationService reservationService;
 
 
-
     @Test
-    public void testReservationServiceCreated(){
+    public void testReservationServiceCreated() {
         assertNotNull(reservationService);
     }
 
-    @Test
-    public void testSavesReservation(){
-        int reservationsBefore = reservationService.getAllReservations().size();
-
+    public Reservation createReservation() {
         Reservation reservation = new Reservation();
         reservation.setStatus(ReservationStatus.NEW);
 
-        reservationService.makeReservation(reservation,1L);
+        return reservation;
+    }
 
-        int reservationsAfter = reservationService.getAllReservations().size();
+    @Test
+    public void testSavesReservation() {
+        Reservation reservation = new Reservation();
+        reservation.setStatus(ReservationStatus.NEW);
 
-        assertEquals(reservationsBefore + 1, reservationsAfter);
+        reservationService.makeReservation(reservation, 1L);
+
+        assertNotNull(reservation.getId());
+
 
 
 
