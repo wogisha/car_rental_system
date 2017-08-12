@@ -13,4 +13,8 @@ public interface ReservationService {
     void makeReservation(Reservation reservation, Long customerId);
 
     void cancelReservation(Long reservationId);
+
+    Reservation getById(Long reservationId);
+
+    void updateReservation(Reservation reservation);
 }

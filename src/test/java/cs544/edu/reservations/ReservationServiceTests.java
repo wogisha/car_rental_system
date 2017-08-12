@@ -30,6 +30,7 @@ public class ReservationServiceTests {
     }
 
     public Reservation createReservation() {
+        
         Reservation reservation = new Reservation();
         reservation.setStatus(ReservationStatus.NEW);
 
@@ -38,16 +39,42 @@ public class ReservationServiceTests {
 
     @Test
     public void testSavesReservation() {
-        Reservation reservation = new Reservation();
-        reservation.setStatus(ReservationStatus.NEW);
+        Reservation reservation = createReservation();
 
         reservationService.makeReservation(reservation, 1L);
 
         assertNotNull(reservation.getId());
 
+    }
 
+    @Test
+    public void testReservationCancelled(){
+        Reservation reservation = createReservation();
 
+        reservationService.makeReservation(reservation, 1L);
+        assertEquals(reservation.getStatus(),ReservationStatus.NEW);
 
+        reservationService.cancelReservation(reservation.getId());
+
+        Reservation reservationCancelled = reservationService.getById(reservation.getId());
+
+        assertEquals(reservationCancelled.getStatus(),ReservationStatus.CANCELLED);
+
+    }
+
+    @Test
+    public void testReservationUpdated(){
+        Reservation reservation = createReservation();
+
+        reservationService.makeReservation(reservation, 1L);
+
+        reservation.setStatus(ReservationStatus.COMPLETED);
+
+        reservationService.updateReservation(reservation);
+
+        Reservation reservationUpdated = reservationService.getById(reservation.getId());
+
+        assertEquals(reservationUpdated.getStatus(),ReservationStatus.COMPLETED);
     }
 
 }
