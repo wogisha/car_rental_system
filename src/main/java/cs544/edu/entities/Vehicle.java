@@ -20,7 +20,10 @@ public class Vehicle {
     private int seatQuantity;
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
+
+    @Column(name = "carCondition")
     private String condition;
+
     private double dailyPrice;
     @Enumerated(EnumType.STRING)
     private VehicleStatus status;
@@ -28,7 +31,7 @@ public class Vehicle {
     public long getId() {
         return id;
     }
-    
+
 
     public void setId(long id) {
         this.id = id;
