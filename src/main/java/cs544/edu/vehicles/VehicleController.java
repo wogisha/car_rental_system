@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import cs544.edu.entities.Vehicle;   
+import cs544.edu.entities.Vehicle;   /*
 import cs544.edu.vehicles.services.VehicleService;
-import cs544.edu.vehicles.services.VehicleTypeService;
+import cs544.edu.vehicles.services.VehicleTypeService; */
 
 @Controller
 @RequestMapping("/vehicles")
 public class VehicleController {
 
-	@Autowired
-	private VehicleService vehicleService;
-	@Autowired
-	private VehicleTypeService vehicleTypeService;
+//	@Autowired
+//	private VehicleService vehicleService;
+//	@Autowired
+//	private VehicleTypeService vehicleTypeService;
 	
 	@RequestMapping({ "/", "/welcome" })
 	public String welcome(Model model) {
@@ -35,14 +35,14 @@ public class VehicleController {
 	}
 
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewProductForm(Model model) {
 		Vehicle vehicle = new Vehicle();
 		model.addAttribute("newVehicle", vehicle);
 		model.addAttribute("types", vehicleTypeService.findAll());
 		return "addVehicle";
 
-	}
+	}  */
 	
 	
 /*	@RequestMapping({ "", "/all" })
