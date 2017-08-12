@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import cs544.edu.CarRentalSystemApplication;
+import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 import cs544.edu.entities.enums.ReservationStatus;
+import cs544.edu.userMgmt.CustomerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -23,6 +25,9 @@ public class ReservationServiceTests {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
 
     @Test
     public void testReservationServiceCreated() {
@@ -30,7 +35,7 @@ public class ReservationServiceTests {
     }
 
     public Reservation createReservation() {
-        
+
         Reservation reservation = new Reservation();
         reservation.setStatus(ReservationStatus.NEW);
 
@@ -75,6 +80,32 @@ public class ReservationServiceTests {
         Reservation reservationUpdated = reservationService.getById(reservation.getId());
 
         assertEquals(reservationUpdated.getStatus(),ReservationStatus.COMPLETED);
+    }
+
+
+    @Test
+    public void testGetReservationsByCustomerId(){
+
+
+        Customer customer = new Customer();
+
+        customerRepository.save(customer);
+
+
+        List<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId());
+
+        assertEquals(reservationList.size(),0);
+
+        Reservation reservation = createReservation();
+
+        reservationService.makeReservation(reservation, customer.getId());
+
+        reservationList = reservationService.getCustomerReservations(customer.getId());
+
+        assertEquals(reservationList.size(),1);
+
+
+
     }
 
 }
