@@ -1,5 +1,7 @@
 package cs544.edu.entities;
 
+import cs544.edu.entities.enums.ReservationStatus;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,14 +15,17 @@ public class Reservation {
     private Date returnDate;
     private Date reservationDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     private Vehicle vehicle;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(mappedBy = "reservation",fetch = FetchType.LAZY)
     private Rent rent;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
 
     public long getId() {
         return id;
@@ -68,5 +73,13 @@ public class Reservation {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public ReservationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
     }
 }
