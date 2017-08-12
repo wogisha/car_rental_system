@@ -3,16 +3,14 @@ package cs544.edu.reservations;
 
 import java.util.List;
 
-import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 
-/**
- * Created by wogisha on 12/08/2017.
- */
 public interface ReservationService {
-    List<Reservation> getCustomerReservations(Customer customer);
+    List<Reservation> getCustomerReservations(Long customerId);
 
-    void makeReservation(Reservation reservation, Customer customer);
+    List<Reservation> getAllReservations();
 
-    void cancelReservation(Reservation reservation);
+    void makeReservation(Reservation reservation, Long customerId);
+
+    void cancelReservation(Long reservationId);
 }
