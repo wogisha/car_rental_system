@@ -2,6 +2,7 @@ package cs544.edu.reservations;
 
 
 import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 
 import cs544.edu.entities.Customer;
@@ -50,9 +51,11 @@ public class ReservationServiceTests {
         Reservation reservation = new Reservation();
 
         reservation.setStatus(ReservationStatus.RESERVED);
-        Date date = new Date();
-        Period p = Period.ofDays(10);
-        date.setYear(date.getYear() + 1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.YEAR,calendar.get(Calendar.YEAR)+ 1);
+        Date date = calendar.getTime();
+
         reservation.setPickupDate(date);
         reservation.setReturnDate(date);
 

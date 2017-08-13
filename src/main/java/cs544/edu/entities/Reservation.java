@@ -19,6 +19,7 @@ public class Reservation {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @CustomFuture(groups = {NewReservation.class},todayDate = false,message = "Should be in the future")
+
     private Date pickupDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

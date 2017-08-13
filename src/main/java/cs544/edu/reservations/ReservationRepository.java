@@ -16,7 +16,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     Page<Reservation> findByCustomer_IdOrderByIdDesc(Long customerId, Pageable pageable);
 
-    Page<Reservation> findByCustomer_licenseNumberLikeOrIdLikeOrderByIdDesc(String customerLicenseNumber, Long id, Pageable pageable);
+    Page<Reservation> findByCustomer_licenseNumberContainingOrIdOrderByIdDesc(String customerLicenseNumber, Long id, Pageable pageable);
 
 
 }

@@ -47,7 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         }
 
-        return reservationRepository.findByCustomer_licenseNumberLikeOrIdLikeOrderByIdDesc(customerLicenceId,recordId,gotoPage(page));
+        return reservationRepository.findByCustomer_licenseNumberContainingOrIdOrderByIdDesc(customerLicenceId,recordId,gotoPage(page));
     }
 
     @Override

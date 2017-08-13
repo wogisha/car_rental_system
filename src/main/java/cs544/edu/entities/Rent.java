@@ -21,11 +21,21 @@ public class Rent {
     private long totalPaid;
     private long refund;
 
-
+    
+    public Rent() {
+    	
+    }
+    
+    public Rent(String cusName, Date rentDate) {
+    	this.customer = new Customer();
+    	this.customer.setFullName(cusName);
+    	this.rentDate = rentDate;
+    }
+    
     @OneToOne
     private Reservation reservation;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.PERSIST)
     private Customer customer;
 
     @ManyToOne
