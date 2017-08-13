@@ -7,9 +7,6 @@
 
 <h3>Reservations</h3>
 
-
-
-
 <form action="/reservations" method="get" class="pull-right">
 
     <input type="text" name="q" placeholder="Customer Licence" value="<c:out value="${param.q}"/>">
@@ -19,18 +16,13 @@
 <ul class="pagination center-block">
     <c:forEach var="i" begin="1" end="${reservations.totalPages}">
         <li class="${page == i ? 'active':' '}"><a href="/reservations?q=${param.q}&page=<c:out value = "${i}"/>" ><c:out value = "${i}"/> </a> </li>
-
     </c:forEach>
-
-
 </ul>
+
  <a href="/" class="btn btn-default">Back Home</a>
 <a href="/reservations/add?vehicleId=1" class="btn btn-default">Make Reservation</a>
 
 <p>${reservation_message}</p>
-
-
-
 
 <table class="table table-striped">
     <tr>
