@@ -13,6 +13,14 @@
 
 
 <a href="/users " class="btn btn-block btn-default">Users </a>
+
 <a href="/rental " class="btn btn-block btn-default">Rent</a>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout"class="btn btn-block btn-default" />
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
+
+
 </body>
 </html>

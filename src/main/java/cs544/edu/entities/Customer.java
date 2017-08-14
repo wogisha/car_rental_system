@@ -15,6 +15,7 @@ public class Customer {
     private Long id;
     private String licenseNumber;
     private String fullName;
+
     private String nationality;
     private String country;
     private String city;

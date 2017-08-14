@@ -31,6 +31,7 @@ public class EmployeeController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String createEmpForm(@ModelAttribute Employee employee, Model model) {
         Map<String, String> roleList = new HashMap<>();
@@ -40,7 +41,7 @@ public class EmployeeController {
         model.addAttribute("roleList", roleList);
         return "userMgmt/addEmp";
     }
-
+    @PreAuthorize("hasRole('MANAGER')")
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String createEmp(@ModelAttribute @Valid Employee employee, BindingResult result,Model model) {
         if (result.hasErrors()) {
@@ -56,13 +57,15 @@ public class EmployeeController {
         }
     }
 
-
+    @PreAuthorize("hasRole('MANAGER')")
     @RequestMapping(value = "/viewEmp", method = RequestMethod.GET)
     public String viewEmpForm( Model model) {
         List<Employee> empList=employeeService.getEmployeeList();
         model.addAttribute("empList", empList);
         return "userMgmt/viewEmp";
     }
+
+
     @PreAuthorize("hasRole('MANAGER')")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateEmpF(@PathVariable("id") Long id,Model model){

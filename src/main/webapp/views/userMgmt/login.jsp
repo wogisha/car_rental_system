@@ -162,6 +162,12 @@ body, html {
 					type="submit" value="Login"
 					class="btn btn-lg btn-primary btn-block btn-signin" /> <input
 					type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+		<div>
+		<a href="<c:url value="/cust/newCust"/>" class="btn btn-default"> + Signup </a>
+
+		</div>
+
 			</form>
 		</div>
 
