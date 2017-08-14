@@ -12,7 +12,7 @@
 <a href="/reservations " class="btn btn-block btn-default">Reservations </a>
 
 
-<a href="/users " class="btn btn-block btn-default">Users </a>
+<a href="/emp/viewEmp" class="btn btn-block btn-default">Users </a>
 <a href="/rental " class="btn btn-block btn-default">Rent</a>
 </body>
 </html>

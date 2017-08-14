@@ -40,6 +40,7 @@
                 </div>
             </div>
         <a href="<c:url value="/emp/new"/>" class="btn btn-default"> + Add</a>
+        <a href="<c:url value="/"/>" class="btn btn-default"> Back Home</a>
 
     </div>
 </div>

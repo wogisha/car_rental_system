@@ -36,7 +36,7 @@ public class SecConfig extends WebSecurityConfigurerAdapter{
 //                .antMatchers("/public/**").permitAll()
                 .anyRequest().hasAnyRole("EMPLOYEE", "MANAGER")
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/emp/viewEmp",true).permitAll();
+                .formLogin().loginPage("/login").defaultSuccessUrl("/",true).permitAll();
     }
 
     @Override

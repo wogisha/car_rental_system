@@ -45,7 +45,6 @@ public class ReservationServiceTests {
     }
 
 
-
     public Reservation createReservation() {
 
         Reservation reservation = new Reservation();
