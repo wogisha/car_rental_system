@@ -1,27 +1,44 @@
 package cs544.edu.entities;
 
 import cs544.edu.entities.enums.ReservationStatus;
+import cs544.edu.reservations.CustomFuture;
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 @Entity
 public class Reservation {
     @Id
     @GeneratedValue
+
     private long id;
 
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @CustomFuture(groups = {NewReservation.class})
+
     private Date pickupDate;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @CustomFuture(groups = {NewReservation.class},todayDate = false,message = "Should be in the future")
     private Date returnDate;
+
+    @Temporal(TemporalType.DATE)
     private Date reservationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Customer customer;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     private Vehicle vehicle;
 
-    @OneToOne(mappedBy = "reservation",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
     private Rent rent;
 
     @Enumerated(EnumType.STRING)
@@ -82,5 +99,26 @@ public class Reservation {
 
     public void setStatus(ReservationStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", pickupDate=" + pickupDate +
+                ", returnDate=" + returnDate +
+                ", reservationDate=" + reservationDate +
+                ", vehicle=" + vehicle +
+                ", rent=" + rent +
+                ", status=" + status +
+                '}';
+    }
+
+    public boolean isNewReservation() {
+        return status.equals(ReservationStatus.RESERVED);
+    }
+
+    public interface NewReservation {
+
     }
 }

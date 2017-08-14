@@ -2,15 +2,27 @@ package cs544.edu.reservations;
 
 
 import java.util.List;
-
+import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
+import cs544.edu.entities.Vehicle;
+import org.springframework.data.domain.Page;
 
 public interface ReservationService {
-    List<Reservation> getCustomerReservations(Long customerId);
+    Page<Reservation> getCustomerReservations(Long customerId, int page);
+    Page<Reservation> getCustomerReservationsById(String customerLicenceId, int page);
 
-    List<Reservation> getAllReservations();
+    Page<Reservation> getAllReservations(int page);
 
-    void makeReservation(Reservation reservation, Long customerId);
+    void makeReservation(Reservation reservation, Long customerId, Vehicle vehicleToReserve);
 
     void cancelReservation(Long reservationId);
+
+    Reservation getById(Long reservationId);
+
+    void updateReservation(Reservation reservation);
+
+    Vehicle getVehicleToReserve(Long vehicleId);
+
+    Iterable<Customer> getCustomers();
+
 }

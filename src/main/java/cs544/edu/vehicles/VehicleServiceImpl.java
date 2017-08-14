@@ -24,40 +24,43 @@ public class VehicleServiceImpl  {
 		vehicleDao.save(vehicle);
 	}
 
-/*	@Override
+
 	public List<Vehicle> getAllVehicles() {
 		return vehicleDao.findAll();
 	}
 
-	@Override
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void delete(long vehicleId) {
 		vehicleDao.delete(vehicleId);
 		
 	}
 
-	@Override
+
 	public void update(Vehicle vehicle) {
-		vehicleDao.update(vehicle);
+//		vehicleDao.update(vehicle);
 		
 	}
 
 	
 
-	@Override
+
 	public List<Vehicle> search(Integer seats, Double minPrice, Double maxPrice, Boolean isAvailable) {
-		return vehicleDao.searh(seats,minPrice,maxPrice,isAvailable);
+//		return vehicleDao.searh(seats,minPrice,maxPrice,isAvailable);
+		return null;
 	}
 
-	@Override
+
 	public List<Vehicle> isAvailable(Boolean flag) {
-		return vehicleDao.isAvaialble(flag);
+
+//		return vehicleDao.isAvaialble(flag);
+		return null;
 	}
 
-	@Override
+
 	public Vehicle findByVehicleId(long vehicleId) {
 		return vehicleDao.findOne(vehicleId);
-	}   */
+	}   
 
 	
 }
