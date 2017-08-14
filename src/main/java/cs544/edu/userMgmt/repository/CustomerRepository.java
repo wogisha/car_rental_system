@@ -1,4 +1,4 @@
-package cs544.edu.userMgmt;
+package cs544.edu.userMgmt.repository;
 
 import cs544.edu.entities.Customer;
 import org.springframework.data.repository.CrudRepository;

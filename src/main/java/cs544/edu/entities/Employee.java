@@ -2,14 +2,18 @@ package cs544.edu.entities;
 
 
 import cs544.edu.entities.enums.UserRole;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Employee {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty
+    @Size(min = 8,max = 100)
     private String password;
     private String username;
     private String fullName;
