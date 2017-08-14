@@ -11,7 +11,7 @@ import java.util.List;
 import cs544.edu.entities.Vehicle;
 import cs544.edu.entities.enums.ReservationStatus;
 import cs544.edu.entities.enums.VehicleStatus;
-import cs544.edu.userMgmt.CustomerRepository;
+import cs544.edu.userMgmt.repository.CustomerRepository;
 import cs544.edu.vehicles.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

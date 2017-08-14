@@ -12,7 +12,7 @@ import cs544.edu.entities.enums.FuelType;
 import cs544.edu.entities.enums.ReservationStatus;
 import cs544.edu.entities.enums.VehicleStatus;
 import cs544.edu.entities.enums.VehicleType;
-import cs544.edu.userMgmt.CustomerRepository;
+import cs544.edu.userMgmt.repository.CustomerRepository;
 import cs544.edu.vehicles.VehicleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
