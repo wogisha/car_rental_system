@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
     @RequestMapping("/")
     public String mainPage(){
-        return "redirect:/vehicles";
+        return "home";
     }
 }
