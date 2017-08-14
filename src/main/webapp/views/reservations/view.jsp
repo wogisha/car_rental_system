@@ -32,7 +32,12 @@
 </table>
 
 <a href="/reservations" class="btn btn-default">Back to Reservations</a>
-<a href="/rent" class="btn btn-default">Rent out car</a>
-<a href="/reservations/<c:out value="${id}/cancel"/>" class="btn btn-default" >Cancel Reservation</a>
+
+<c:if test="${reservation.newReservation}">
+    <a href="/rental/confirmation?reservationId=${reservation.id}" class="btn btn-default">Rent out car</a>
+    <a href="/reservations/<c:out value="${id}/cancel"/>" class="btn btn-default">Cancel Reservation</a>
+</c:if>
+
+
 </body>
 </html>

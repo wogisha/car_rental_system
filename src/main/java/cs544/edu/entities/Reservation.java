@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
 
@@ -17,13 +18,15 @@ public class Reservation {
 
     private long id;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @CustomFuture(groups = {NewReservation.class},todayDate = false,message = "Should be in the future")
+    @CustomFuture(groups = {NewReservation.class})
 
     private Date pickupDate;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @CustomFuture(groups = {NewReservation.class})
+    @CustomFuture(groups = {NewReservation.class},todayDate = false,message = "Should be in the future")
     private Date returnDate;
 
     @Temporal(TemporalType.DATE)
@@ -109,6 +112,10 @@ public class Reservation {
                 ", rent=" + rent +
                 ", status=" + status +
                 '}';
+    }
+
+    public boolean isNewReservation() {
+        return status.equals(ReservationStatus.RESERVED);
     }
 
     public interface NewReservation {

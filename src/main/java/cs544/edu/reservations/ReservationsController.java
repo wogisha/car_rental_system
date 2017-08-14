@@ -49,16 +49,19 @@ public class ReservationsController {
         }
 
         model.addAttribute("vehicle", vehicleToReserve);
+        model.addAttribute("customers", reservationService.getCustomers());
         return "reservations/add";
     }
 
     @PostMapping("add")
     public String saveReservation(Model model, @RequestParam(value = "vehicleId", required = false) Long vehicleId,
                                   RedirectAttributes redirectAttributes,
-                                  @Validated({Reservation.NewReservation.class}) Reservation reservation,
-                                  BindingResult bindingResult) {
+                                   @Validated({Reservation.NewReservation.class}) Reservation reservation,
+
+                                  BindingResult bindingResult, @RequestParam(value = "customerId") Long customerId) {
 
         Vehicle vehicleToReserve = null;
+
         try {
             vehicleToReserve = reservationService.getVehicleToReserve(vehicleId);
         } catch (CannotReserveVehicleException ex) {
@@ -67,11 +70,13 @@ public class ReservationsController {
         }
 
         if (bindingResult.hasErrors()) {
+
             model.addAttribute("vehicle", vehicleToReserve);
+            model.addAttribute("customers", reservationService.getCustomers());
             return "reservations/add";
         }
 
-        reservationService.makeReservation(reservation, 1L, vehicleToReserve);
+        reservationService.makeReservation(reservation, customerId, vehicleToReserve);
 
         redirectAttributes.addFlashAttribute("reservation_message", "made reservation successfully");
 

@@ -15,6 +15,9 @@ public class CustomFutureValidator implements ConstraintValidator<CustomFuture, 
 
     @Override
     public boolean isValid(Date value, ConstraintValidatorContext context) {
+
+        System.out.print("date>>>>>>" + value);
+
         if (value == null) {
             return false;
         }

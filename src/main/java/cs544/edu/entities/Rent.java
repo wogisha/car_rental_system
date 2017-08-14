@@ -22,13 +22,13 @@ public class Rent {
 	private double totalPaid;
 	private long refund;
 	
-//	@ManyToOne
-//	private Vehicle vehicle;
+	@ManyToOne
+	private Vehicle vehicle;
 
 	@OneToOne
 	private Reservation reservation;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	private Customer customer;
 
 	@ManyToOne
@@ -149,13 +149,13 @@ public class Rent {
 		return totPrice;
 	}
 
-//	public Vehicle getVehicle() {
-//		return vehicle;
-//	}
-//
-//	public void setVehicle(Vehicle vehicle) {
-//		this.vehicle = vehicle;
-//	}
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
 
 	
 }

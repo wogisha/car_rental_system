@@ -5,6 +5,8 @@ import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import cs544.edu.entities.Vehicle;
 import cs544.edu.entities.enums.ReservationStatus;
@@ -105,6 +107,12 @@ public class ReservationServiceImpl implements ReservationService {
 
         return vehicle;
     }
+
+    @Override
+    public Iterable<Customer> getCustomers() {
+        return customerRepository.findAll();
+    }
+
     private Pageable gotoPage(int page)
     {
         PageRequest request = new PageRequest(page, 10);

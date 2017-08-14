@@ -8,7 +8,7 @@
 
 <h3>Make Car Reservation</h3>
 
-<form:form method="post" modelAttribute="reservation" action="/reservations/add?vehicle=2">
+<form:form method="post" modelAttribute="reservation" action="/reservations/add?vehicleId=${vehicle.id}">
 
     <input type="hidden"
            name="${_csrf.parameterName}"
@@ -21,6 +21,15 @@
         Vehicle <input type="text"  value="<c:out value="${vehicle}"/>" disabled="disabled">
     </div>
 
+    <div>
+        Customer
+        <select name="customerId" >
+            <c:forEach items="${customers}" var="customer">
+                <option value="${customer.id}">${customer.fullName} - ${customer.licenseNumber}</option>
+            </c:forEach>
+
+        </select>
+    </div>
     <div>
         When you want to pick it up ? <form:input path="pickupDate" type="date" />
         <form:errors path="pickupDate" />

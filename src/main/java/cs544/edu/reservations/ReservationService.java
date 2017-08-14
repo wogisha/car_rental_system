@@ -1,6 +1,8 @@
 package cs544.edu.reservations;
 
 
+import java.util.List;
+import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 import cs544.edu.entities.Vehicle;
 import org.springframework.data.domain.Page;
@@ -20,5 +22,7 @@ public interface ReservationService {
     void updateReservation(Reservation reservation);
 
     Vehicle getVehicleToReserve(Long vehicleId);
+
+    Iterable<Customer> getCustomers();
 
 }

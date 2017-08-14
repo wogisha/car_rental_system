@@ -24,47 +24,53 @@ import cs544.edu.entities.Rent;
 @RequestMapping("/rental")
 public class RentalController {
 
-	@Autowired
-	private RentalService rentalService;
+    @Autowired
+    private RentalService rentalService;
 
-	@InitBinder
-	public void allowEmptyDateBinding(WebDataBinder binder) {
-		// Custom Date Editor
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		simpleDateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
-	}
+    @InitBinder
+    public void allowEmptyDateBinding(WebDataBinder binder) {
+        // Custom Date Editor
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
+    }
 
-	@RequestMapping("/checkincar")
-	public ModelAndView checkInCar() {
-		 ModelAndView mv = new ModelAndView ("CheckInCar");
-		 mv.addObject("rent", new Rent());
-		//model.addAttribute("rent", new Rent());
-		return mv;
-	}
-	
-	@PostMapping("/checkincar")
-	public String rentCar(@ModelAttribute("rent") Rent rent) {
-		rentalService.saveRent(rent);
-		return "CheckInCar";
-	}
-	
-	///////////Test
-	@GetMapping("/checkoutcar")
-	public String getCheckoutCar(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model){		
-		HttpSession session=request.getSession();		
-		Rent rentSession = (Rent) session.getAttribute("rent");
-		
-		model.addAttribute(rentSession);
-		return "CheckOutCar";		
-	}
-	
-	@PostMapping("/payment")
-	public String saveCheckoutCar(HttpServletRequest request){	
-		HttpSession session=request.getSession();		
-		Rent rent = (Rent) session.getAttribute("rent");
-		rentalService.saveRent(rent);		
-		//note ve home
-		return "hello";		
-	}
+    @RequestMapping("")
+    public String getAllRentals(Model model) {
+        model.addAttribute("rentals", rentalService.getAll());
+        return "rental/RentalList";
+    }
+
+    @RequestMapping("/checkincar")
+    public ModelAndView checkInCar() {
+        ModelAndView mv = new ModelAndView("CheckInCar");
+        mv.addObject("rent", new Rent());
+        //model.addAttribute("rent", new Rent());
+        return mv;
+    }
+
+    @PostMapping("/checkincar")
+    public String rentCar(@ModelAttribute("rent") Rent rent) {
+        rentalService.saveRent(rent);
+        return "rental/CheckInCar";
+    }
+
+    ///////////Test
+    @GetMapping("/checkoutcar")
+    public String getCheckoutCar(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        Rent rentSession = (Rent) session.getAttribute("rent");
+
+        model.addAttribute(rentSession);
+        return "rental/CheckOutCar";
+    }
+
+    @PostMapping("/payment")
+    public String saveCheckoutCar(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Rent rent = (Rent) session.getAttribute("rent");
+        rentalService.saveRent(rent);
+        //note ve home
+        return "redirect:/rental";
+    }
 }

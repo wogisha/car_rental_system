@@ -6,15 +6,14 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cs544.edu.entities.Reservation;
+import cs544.edu.reservations.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import cs544.edu.entities.Customer;
 import cs544.edu.entities.Rent;
@@ -23,33 +22,31 @@ import cs544.edu.entities.Vehicle;
 @Controller
 @RequestMapping("/rental")
 public class ConfirmationController {
+	@Autowired
+	private ReservationService reservationService;
 	
 	
 	
 	@GetMapping("confirmation")
-	public String getConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model){
+	public String getConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model,
+								  @RequestParam("reservationId") Long reservationId){
 		HttpSession session=request.getSession();
-		
-		Customer customer = new Customer();
-		customer.setFullName("Ha Thuy Hong");
-		customer.setLicenseNumber("123456789");
-		
-		Vehicle vehicle = new Vehicle();
-		vehicle.setBrand("brand");
-		vehicle.setModel("model");
-		
-		rent.setDailyRentFee(10);
-		rent.setCustomer(customer);
 
-		Date date = new Date();		
-		rent.setRentDate(date);
-		rent.setReturnDate(date);
+		Reservation reservation = reservationService.getById(reservationId);
+
+//		rent.setDailyRentFee(reservation.getVehicle().getDailyPrice());
+
+		rent.setCustomer(reservation.getCustomer());
+		rent.setVehicle(reservation.getVehicle());
+
+		rent.setRentDate(reservation.getPickupDate());
+		rent.setReturnDate(reservation.getReturnDate());
 		
-		//rent.getReservation().setVehicle(vehicle);
+		rent.setReservation(reservation);
 		session.setAttribute("rent", rent);
 		model.addAttribute(rent);
 		
-		return "Confirmation";
+		return "rental/Confirmation";
 	}
 	
 	@InitBinder
