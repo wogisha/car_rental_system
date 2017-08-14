@@ -27,7 +27,6 @@
             <c:forEach items="${customers}" var="customer">
                 <option value="${customer.id}">${customer.fullName} - ${customer.licenseNumber}</option>
             </c:forEach>
-
         </select>
     </div>
     <div>
