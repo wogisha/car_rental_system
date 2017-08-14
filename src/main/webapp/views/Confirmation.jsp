@@ -6,21 +6,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Check Out Car</title>
+<title>Confirmation</title>
 </head>
 <body>
-	<form:form action="payment" method="post" modelAttribute="rent">
+	<form:form action="confirmation" method="post" modelAttribute="rent">
+
 		<div class="col-sm-6">
 			<div class="form-group">
-				<label > Driver Name: </label>
-				<form:label path="customer.fullName">${rent.customer.fullName}</form:label>
+				<form:label path="customer.fullName"> Driver Name: </form:label>
+				<form:label path="customer.fullName">${sessionScope.rent.customer.fullName}</form:label>
 			</div>
 		</div>
 		
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="licenseNumber"> License Number </label>
-				<form:label path="customer.licenseNumber">${rent.customer.licenseNumber}</form:label>
+				<form:label path="customer.licenseNumber">${sessionScope.rent.customer.licenseNumber} </form:label>
 			</div>
 		</div>
 
@@ -36,38 +37,34 @@
 				<label for="model"> Car Type </label>
 				<label>${sessionScope.rent.reservation.vehicle.model} </label>	
 			</div>
-		</div>
-		 --%>
+		</div> --%>
 		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="rentDate"> Pick-Up Date </label>
-				<form:label path="rentDate">${rent.rentDate} </form:label>	
+				<form:input type="date" name="rentDate" class="form-control"
+					path="rentDate" />
 			</div>
 		</div>
 
-		 <div class="col-xs-6">
+		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="returnDate"> Drop-Off Date </label>
-				<form:label path="returnDate">${rent.returnDate} </form:label>	
+				<form:input type="date" name="returnDate" class="form-control"
+					path="returnDate" />
 			</div>
 		</div>
-		
+
+	
 		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="dailyRentFee"> Daily Fee </label>
-				<form:label path="dailyRentFee">${rent.dailyRentFee} </form:label>
-			</div>
-		</div>
-		
-		<div class="col-xs-6">
-			<div class="form-group">
-				<label for="totalPaid"> Total Paid </label>
-				<form:label path="totalPaid">${rent.totalPaid} </form:label>	
+				<form:label path="dailyRentFee">${sessionScope.rent.dailyRentFee} </form:label>	
 			</div>
 		</div>
 
-		<button type="submit" class="btn btn-primary">Payment</button>
+		<button type="submit" class="btn btn-primary">Confirm</button>
 		
+
 	</form:form>
 </body>
 </html>

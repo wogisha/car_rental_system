@@ -6,4 +6,5 @@ public interface RentalService {
 	
 	public void saveRent(Rent rent);
 	
+	
 }

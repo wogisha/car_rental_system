@@ -5,7 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import cs544.edu.entities.Vehicle;
@@ -24,7 +23,7 @@ public class VehicleServiceImpl  {
 		vehicleDao.save(vehicle);
 	}
 
-/*	@Override
+	@Override
 	public List<Vehicle> getAllVehicles() {
 		return vehicleDao.findAll();
 	}
@@ -57,7 +56,7 @@ public class VehicleServiceImpl  {
 	@Override
 	public Vehicle findByVehicleId(long vehicleId) {
 		return vehicleDao.findOne(vehicleId);
-	}   */
+	}   
 
 	
 }

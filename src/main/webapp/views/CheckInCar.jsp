@@ -17,79 +17,104 @@
 </head>
 <body>
 	<h2>Check In Car</h2>
-	<form:form action="checkInCar" method="post" modelAttribute="rent">
+	<form:form action="checkincar" method="post" modelAttribute="rent">
 
 		<div class="col-sm-6">
 			<div class="form-group">
-				<label for="fullName"> Customer Name </label>
+				<label for="fullName"> Driver Name </label>
 				<form:input name="fullName" class="form-control"
 					path="customer.fullName" />
 			</div>
 		</div>
 
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="licenseNumber"> License Number </label>
+				<form:input name="licenseNumber" class="form-control"
+					path="customer.licenseNumber" />
+			</div>
+		</div>
+
+		<div class="col-sm-6">
+			<label for="brand"> Rental Partner </label>
+			<form:input name="brand" class="form-control"
+					path="reservation.vehicle.brand" />
+			<%-- <div class="dropdown">
+				<form:input name="brand" class="form-control"
+					path="reservation.vehicle.brand" />
+				<button class="btn btn-primary dropdown-toggle" type="button"
+					data-toggle="dropdown" path="reservation.vehicle.brand">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">HTML</a></li>
+					<li><a href="#">CSS</a></li>
+					<li><a href="#">JavaScript</a></li>
+				</ul> --%>
+			</div>
+			<%-- <div class="form-group">
+				
+				
+			</div> --%>
+		</div>
+
 		<div class="col-xs-6">
 			<div class="form-group">
-				<label for="rentDate"> Rent Date </label>
+				<label for="model"> Car Type </label>
+				<form:input name="model" class="form-control"
+					path="reservation.vehicle.model" />
+			</div>
+		</div>
 
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="rentDate"> Pick-Up Date </label>
 				<form:input type="date" name="rentDate" class="form-control"
 					path="rentDate" />
 			</div>
 		</div>
 
-		<button type="submit" class="btn btn-primary">Check In</button>
-		<!-- <table border="1">   -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Rental Partner</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td class="title">Car Type</td> -->
-		<!--     	<td></td> -->
-		<!--     </tr>   -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Pick-Up</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td class="title">Drop-Off</td> -->
-		<!--     	<td></td> -->
-		<!--     </tr>  -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Pick-Up Location</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td class="title">Drop-Off Location</td> -->
-		<!--     	<td></td> -->
-		<!--     </tr> -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Driver</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td class="title">Daily Fee</td> -->
-		<!--     	<td></td> -->
-		<!--     </tr> -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Fuel Provider</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td class="title">Fuel Charge</td> -->
-		<!--     	<td></td> -->
-		<!--     </tr> -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Total Paid</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td class="title">Taxes and fee</td> -->
-		<!--     	<td></td>    	 -->
-		<!--     </tr> -->
-		<!--     <tr> -->
-		<!--     	<td class="title">Amount Due At Pick Up</td> -->
-		<!--     	<td></td> -->
-		<!--     	<td><input type="button" class="btn btn-success" value="Submit"></td> -->
-		<!--     </tr> -->
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="returnDate"> Drop-Off Date </label>
+				<form:input type="date" name="returnDate" class="form-control"
+					path="returnDate" />
+			</div>
+		</div>
 
-		<%--    <%--  <c:forEach items="${students}" var="bean"> --%>
-		<%--         <tr> --%>
-		<%--             <td>${bean.name }</td> --%>
-		<%--             <td>${bean.lastName }</td> --%>
-		<%--             <td><input type="button" name="edit" value="Do!" --%>
-		<%--                 onclick="foo();" /></td> --%>
-		<%--             <td><form action="<%="EditStudent?studentid=6" %>"><input type="submit" value="Edit" /></form></td> --%>
-		<%--         </tr> --%>
-		<%--     </c:forEach> --%>
-		<!-- </table> -->
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="dailyRentFee"> Daily Fee </label>
+				<form:input type="number" name="dailyRentFee" class="form-control"
+					path="dailyRentFee" />
+			</div>
+		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="fuelProvidedBy"> Fuel Provider </label>
+				<form:input name="fuelProvidedBy" class="form-control"
+					path="fuelProvidedBy" />
+			</div>
+		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="fuelCharge"> Fuel Charge </label>
+				<form:input type="number" name="fuelCharge" class="form-control"
+					path="fuelCharge" />
+			</div>
+		</div>
+
+		<div class="col-xs-6">
+			<div class="form-group">
+				<label for="fuelProvidedBy"> Fuel Provider </label>
+				<form:input name="fuelProvidedBy" class="form-control"
+					path="fuelProvidedBy" />
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">Check In</button>
+
 
 	</form:form>
 </body>

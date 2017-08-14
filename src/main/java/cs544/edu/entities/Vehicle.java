@@ -1,11 +1,20 @@
 package cs544.edu.entities;
 
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import cs544.edu.entities.enums.FuelType;
 import cs544.edu.entities.enums.VehicleStatus;
 import cs544.edu.entities.enums.VehicleType;
-
-import javax.persistence.*;
 
 @Entity
 public class Vehicle {
@@ -27,6 +36,9 @@ public class Vehicle {
     private double dailyPrice;
     @Enumerated(EnumType.STRING)
     private VehicleStatus status;
+    
+//    @OneToMany(mappedBy= "vehicle")
+//    private List<Rent> rent;
 
     public long getId() {
         return id;
@@ -108,4 +120,16 @@ public class Vehicle {
     public void setStatus(VehicleStatus status) {
         this.status = status;
     }
+
+
+//	public List<Rent> getRent() {
+//		return rent;
+//	}
+//
+//
+//	public void setRent(List<Rent> rent) {
+//		this.rent = rent;
+//	}
+    
+    
 }
