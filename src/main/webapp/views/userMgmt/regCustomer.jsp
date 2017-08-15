@@ -16,6 +16,7 @@
     <div align="center" style="width: 50%">
         <h1>Please Complete all the fields!</h1>
         <form:form method="POST" modelAttribute="customer">
+            <input name="id" type="hidden" value="${customer.id}">
             <div class="form-group">
                 <label>Full Name</label>
                 <form:input path="fullName" cssClass="form-control" value="${customer.fullName}"/>
@@ -51,7 +52,8 @@
                 <form:input path="mobileNumber" cssClass="form-control" value="${customer.mobileNumber}"/>
                 <form:errors path="mobileNumber" cssClass="form-text text-warning"/>
             </div>
-            <button type="submit" class="btn btn-default"> Register</button>
+            <button type="submit" class="btn btn-default"> Update Information</button>
+            <a href="/" class="btn btn-default"> Back Home</a>
         </form:form>
     </div>
 </div>

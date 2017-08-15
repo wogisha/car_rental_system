@@ -10,4 +10,6 @@ public interface CustomerService {
     public List<Customer> getCustomerList();
     public Customer findOne(Long id);
     public Customer findByID(Long ID);
+
+    public Customer findByUsername(String username);
 }

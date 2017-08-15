@@ -38,13 +38,13 @@
                             <td><c:out value="${cust.licenseNumber}" /></td>
                             <td><c:out value="${cust.mobileNumber}" /></td>
 
-                            <td><a href="<c:url value="/cust/updateCust/${cust.id}"/>">Update</a></td>
+                            <%--<td><a href="<c:url value="/cust/updateCust/${cust.id}"/>">Update</a></td>--%>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
         </div>
-        <a href="<c:url value="/cust/newCust"/>" class="btn btn-default"> + New </a>
+        <a href="<c:url value="/"/>" class="btn btn-default"> Back home </a>
 
     </div>
 </div>

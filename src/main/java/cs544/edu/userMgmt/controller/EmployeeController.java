@@ -84,7 +84,7 @@ public class EmployeeController {
     public String changePw(String olPpassword, String newPassword1, String newPassword2, Principal principal,Model model){
         if(!newPassword1.equals(newPassword2)){
             model.addAttribute("error","New Passwords did not match");
-            return "userMgmt/changePasswordn";
+            return "userMgmt/changePassword";
         }
         Employee emp = employeeService.findByUsername(principal.getName());
         if(passwordEncoder.matches(olPpassword,emp.getPassword())){

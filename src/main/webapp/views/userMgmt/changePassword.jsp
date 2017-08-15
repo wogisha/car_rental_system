@@ -32,9 +32,9 @@
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-            <button type="submit" > Change </button>
-            <button type="button" > Cancel </button>
-
+            <button type="submit" class="btn btn-default" > Change </button>
+            <button type="button" class="btn btn-default" > Cancel </button>
+            <a href="/" class="btn btn-default"> back home</a>
 
         </form>
     </div>

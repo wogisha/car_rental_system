@@ -1,9 +1,9 @@
 package cs544.edu.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 import java.util.List;
@@ -13,13 +13,22 @@ public class Customer {
     @Id
     @GeneratedValue
     private Long id;
-    private String licenseNumber;
-    private String fullName;
 
+    @NotEmpty
+    private String licenseNumber;
+    @NotEmpty
+    private String fullName;
+    @NotEmpty
     private String nationality;
+    @NotEmpty
     private String country;
+
     private String city;
+
     private String mobileNumber;
+
+    @OneToOne
+    private Employee employee;
 
     @OneToMany(mappedBy = "customer")
     List<Rent> rentList;
@@ -83,5 +92,13 @@ public class Customer {
 
     public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

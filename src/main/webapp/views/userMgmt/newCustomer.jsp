@@ -42,19 +42,12 @@
                 </div>
             </c:if>
 
-            <div class="form-group">
-                <label>Role</label>
-                <form:select path="role" items="${roleList}" cssClass="form-control"/>
-                <form:errors path="role" cssClass="form-text text-warning"/>
-            </div>
 
             <button type="submit" class="btn btn-default"> Save</button>
             <button type="reset" class="btn btn-default"> Reset</button>
 
-            <c:if test="${not empty employee.id}">
-                <a href="<c:url value="/deactivate/${employee.id}"/>" class="btn btn-default"> Deactive</a>
-            </c:if>
-            <a href="/emp/viewEmp " class="btn btn-default">Back to Users</a>
+
+
         </form:form>
     </div>
 </div>

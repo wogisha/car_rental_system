@@ -35,4 +35,9 @@ public class CustomerServiceImpl  implements CustomerService{
     public Customer findByID(Long ID) {
         return null;
     }
+
+    @Override
+    public Customer findByUsername(String username) {
+        return customerRepository.findByEmployee_Username(username);
+    }
 }

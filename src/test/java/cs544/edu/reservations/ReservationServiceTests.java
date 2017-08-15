@@ -125,7 +125,7 @@ public class ReservationServiceTests {
 
     @Test(expected = NullPointerException.class)
     public void testGetReservationsByCustomerId() {
-        Customer customer = new Customer();
+        Customer customer = getCustomer();
 
         customerRepository.save(customer);
 
@@ -144,8 +144,7 @@ public class ReservationServiceTests {
 
     @Test
     public void testCancellingReservation() {
-        Customer customer = new Customer();
-
+        Customer customer = getCustomer();
         customerRepository.save(customer);
 
         Page<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId(),0);
@@ -174,6 +173,15 @@ public class ReservationServiceTests {
 
         assertEquals(vehicleReserved.getStatus(),VehicleStatus.AVAILABLE);
 
+    }
+
+    private Customer getCustomer() {
+        Customer customer = new Customer();
+        customer.setFullName("123");
+        customer.setNationality("nation");
+        customer.setLicenseNumber("321");
+        customer.setCountry("country");
+        return customer;
     }
 
 
