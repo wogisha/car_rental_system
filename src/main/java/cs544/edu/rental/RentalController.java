@@ -2,6 +2,7 @@ package cs544.edu.rental;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cs544.edu.entities.Rent;
+import cs544.edu.entities.enums.VehicleStatus;
 
 @Controller
 @RequestMapping("/rental")
@@ -67,26 +70,31 @@ public class RentalController {
 
 	@PostMapping("/payment")
 	public String saveCheckoutCar(HttpServletRequest request) {
+		
 		HttpSession session = request.getSession();
 		Rent rent = (Rent) session.getAttribute("rent");
 		rentalService.saveRent(rent);
 		return "redirect:/rental";
+
 	}
 
 	@GetMapping("{id}")
 	public String viewRentalCarDetail(@PathVariable Long id, Model model) {
 		Rent rent = rentalService.getOne(id);
 		model.addAttribute("rent", rent);
+		// rent.setRentedCar(rent.getReservation().getVehicle().getStatus().equals(VehicleStatus.RENTED));
+		// model.addAttribute("isRentedCar", rent);
 		return "rental/RentalCarDetail";
 
 	}
 
 	@PostMapping("/updaterentalcar/{id}")
 	public String updateRentalCarDetail(@PathVariable Long id, Model model) {
+		
 		Rent rent = rentalService.getOne(id);
 		model.addAttribute("rent", rent);
 		rentalService.returnedCar(rent);
-		return "redirect:/rental/RentalList";
-		
+		return "redirect:/rental";
+
 	}
 }

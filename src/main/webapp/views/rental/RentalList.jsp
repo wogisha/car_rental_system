@@ -13,7 +13,7 @@
 
 </head>
 <body class="container">
-<%-- <form:form action="rentalcardetail" method="post" modelAttribute="rent">  --%>
+
 	<h3>Rental List</h3>
 	<a href="/" class="btn btn-default">Back Home</a>
 	<table class="table table-striped">
@@ -24,10 +24,9 @@
 			<th>Pick Up Date</th>
 			<th>Drop Off Date</th>
 			<th>Vehicle</th>
-			<th>Vehicle Status</th>
-			<th>Total Paid</th>		
-			<th>Extra Paid</th>	
-			<th>Refund</th>
+			<th>Status</th>
+			<th>Total Paid</th>
+
 
 		</tr>
 		<c:forEach items="${rentals}" var="rent">
@@ -40,15 +39,14 @@
 				<td><c:out value="${rent.rentDate}" /></td>
 				<td><c:out value="${rent.returnDate}" /></td>
 				<td><c:out value="${rent.vehicle} / #${rent.vehicle.id}" /></td>
-				<td><c:out value="${rent.vehicle.status}" /></td>
-				<td><c:out value="${rent.totalPaid}" /></td>				
-				<td><c:out value="${rent.extraPaid}" /></td>
-				<td><c:out value="${rent.refund}" /></td>
+				<td><c:out value="${rent.rentStatus}" /></td>
+				<td><c:out value="${rent.totalPaid}" /></td>
+
 			</tr>
 		</c:forEach>
 
 	</table>
-<%-- </form:form> --%>
+
 
 </body>
 </html>

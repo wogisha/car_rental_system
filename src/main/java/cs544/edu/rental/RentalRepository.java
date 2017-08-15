@@ -6,4 +6,5 @@ import cs544.edu.entities.Rent;
 
 public interface RentalRepository extends JpaRepository<Rent, Long> {
 	
+	
 }

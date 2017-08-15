@@ -80,11 +80,12 @@
 		<div class="col-xs-6">
 				<a href="/" class="btn btn-primary">Back Home</a></div>
 
-		<c:if test="${rentalService.returnedCar(rent)}">
+		
+		<c:if test="${rent.isRented()}">  
 			<div class="col-xs-6">
 			<button type="submit" class="btn btn-primary">Return Car</button>			
 			</div>
-		</c:if>
+		 </c:if> 
 	</form:form>
 </body>
 </html>

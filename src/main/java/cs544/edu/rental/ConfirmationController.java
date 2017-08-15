@@ -26,9 +26,13 @@ public class ConfirmationController {
 	
 	
 	@GetMapping("confirmation")
-	public String getConfirmation(@ModelAttribute("rent") Rent rent, Model model,
+	public String getConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model,
 								  @RequestParam("reservationId") Long reservationId){
+		HttpSession session=request.getSession();
+
 		Reservation reservation = reservationService.getById(reservationId);
+
+//		rent.setDailyRentFee(reservation.getVehicle().getDailyPrice());
 
 		rent.setCustomer(reservation.getCustomer());
 		rent.setVehicle(reservation.getVehicle());
@@ -37,7 +41,7 @@ public class ConfirmationController {
 		rent.setReturnDate(reservation.getReturnDate());
 		
 		rent.setReservation(reservation);
-
+		session.setAttribute("rent", rent);
 		model.addAttribute(rent);
 		
 		return "rental/Confirmation";
@@ -57,7 +61,7 @@ public class ConfirmationController {
 		Rent rentSession = (Rent)session.getAttribute("rent");
 		//rent.setTotalPaid(rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rent.getReservation().getVehicle().getDailyPrice()));		
 		
-		double totalPaid = rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rent.getReservation().getVehicle().getDailyPrice());
+		double totalPaid = rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rentSession.getReservation().getVehicle().getDailyPrice());
 		rent.setTotalPaid(totalPaid);
 		rentSession.setTotalPaid(totalPaid);
 
@@ -67,6 +71,7 @@ public class ConfirmationController {
 		rentSession.setRentDate(rent.getRentDate());
 		rentSession.setReturnDate(rent.getReturnDate());
 		
+		model.addAttribute(rentSession);
 		return "redirect:/rental/checkoutcar";
 	}
 }

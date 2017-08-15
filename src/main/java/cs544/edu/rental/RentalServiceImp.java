@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import cs544.edu.entities.Reservation;
 import cs544.edu.entities.Vehicle;
+import cs544.edu.entities.enums.RentStatus;
 import cs544.edu.entities.enums.ReservationStatus;
 import cs544.edu.entities.enums.VehicleStatus;
 import cs544.edu.reservations.ReservationRepository;
@@ -38,6 +39,8 @@ public class RentalServiceImp implements RentalService {
 
 		Vehicle vehicle = rent.getVehicle();
 		vehicle.setStatus(VehicleStatus.RENTED);
+		
+		rent.setRentStatus(RentStatus.RENTED);
 
 		rentalRepository.save(rent);
 		reservationRepository.save(reservation);
@@ -55,24 +58,20 @@ public class RentalServiceImp implements RentalService {
 	}
 
 	@Override
-	public boolean returnedCar(Rent rent) {
+	public void returnedCar(Rent rent) {
 		if(rent.getReservation().getStatus().equals(ReservationStatus.COMPLETED)) {
 			if(rent.getReservation().getVehicle().getStatus().equals(VehicleStatus.RENTED)) {
 				Vehicle vehicle = rent.getVehicle();
 				vehicle.setStatus(VehicleStatus.AVAILABLE);
-				
-				if(rent.getReturnDate().compareTo(new Date())!=1) {
-					Date tempDate= rent.getReturnDate();
-					rent.setReturnDate(new Date());
-					double temp = rent.calculateCost(tempDate, new Date(), rent.getReservation().getVehicle().getDailyPrice());
-					if(temp>0)
-						rent.setExtraPaid(temp);			
-					rent.setRefund(temp + rent.getTotalPaid());
-				}
+				rent.setRentStatus(RentStatus.RETURNED);				
 			}
-			return true;
 		}
-		return false;
+	}
+
+	@Override
+	public void updateRent(Rent rent) {
+		
+		
 	}
 	
 }

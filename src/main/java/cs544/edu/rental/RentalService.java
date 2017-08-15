@@ -12,7 +12,9 @@ public interface RentalService {
 	
 	Rent getOne(long id);
 	
-	public boolean returnedCar(Rent rent);
+	public void returnedCar(Rent rent);
+	
+	public void updateRent(Rent rent);
 	
 	
 }

@@ -1,11 +1,19 @@
 package cs544.edu.entities;
 
-import cs544.edu.entities.enums.FuelProvider;
-
-import javax.persistence.*;
-
 import java.beans.Transient;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import cs544.edu.entities.enums.FuelProvider;
+import cs544.edu.entities.enums.RentStatus;
+import cs544.edu.entities.enums.VehicleStatus;
 
 @Entity
 public class Rent {
@@ -22,7 +30,17 @@ public class Rent {
 	private double totalPaid;
 	private double refund;
 	private double extraPaid;
-	
+	@Enumerated(EnumType.STRING)
+	private RentStatus rentStatus;
+
+	public RentStatus getRentStatus() {
+		return rentStatus;
+	}
+
+	public void setRentStatus(RentStatus rentStatus) {
+		this.rentStatus = rentStatus;
+	}
+
 	@ManyToOne
 	private Vehicle vehicle;
 
@@ -140,12 +158,12 @@ public class Rent {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
-	
+
 	@Transient
-	public double calculateCost(Date start, Date end, double price){
-		
-		int days=(int)(end.getTime()-start.getTime())/(1000*60*60*24);
-		double totPrice = price + price*days;
+	public double calculateCost(Date start, Date end, double price) {
+
+		int days = (int) (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+		double totPrice = price + price * days;
 		System.out.println(totPrice);
 		return totPrice;
 	}
@@ -166,5 +184,11 @@ public class Rent {
 		this.extraPaid = extraPaid;
 	}
 
-	
+	public boolean isRented() {
+		if(rentStatus.equals(RentStatus.RENTED)) {
+			return true;
+		}
+		return false;
+	}
+
 }
