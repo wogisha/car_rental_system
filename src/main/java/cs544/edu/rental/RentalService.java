@@ -14,7 +14,7 @@ public interface RentalService {
 	
 	public void returnedCar(Rent rent);
 	
-	public void updateRent(Rent rent);
+	
 	
 	
 }

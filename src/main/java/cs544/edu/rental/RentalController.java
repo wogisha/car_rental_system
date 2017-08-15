@@ -82,8 +82,6 @@ public class RentalController {
 	public String viewRentalCarDetail(@PathVariable Long id, Model model) {
 		Rent rent = rentalService.getOne(id);
 		model.addAttribute("rent", rent);
-		// rent.setRentedCar(rent.getReservation().getVehicle().getStatus().equals(VehicleStatus.RENTED));
-		// model.addAttribute("isRentedCar", rent);
 		return "rental/RentalCarDetail";
 
 	}
