@@ -1,6 +1,5 @@
 package cs544.edu.entities;
 
-
 import cs544.edu.entities.enums.FuelType;
 import cs544.edu.entities.enums.VehicleStatus;
 import cs544.edu.entities.enums.VehicleType;
@@ -9,103 +8,106 @@ import javax.persistence.*;
 
 @Entity
 public class Vehicle {
-    @Id
-    @GeneratedValue
-    private long id;
-    private String brand;
-    @Enumerated(EnumType.STRING)
-    private VehicleType type;
-    private String model;
-    private String plateNumber;
-    private int seatQuantity;
-    @Enumerated(EnumType.STRING)
-    private FuelType fuelType;
+	@Id
+	@GeneratedValue
+	private long id;
 
-    @Column(name = "carCondition")
-    private String condition;
+	private String brand;
+	private String model;
+	private String plateNumber;
 
-    private double dailyPrice;
-    @Enumerated(EnumType.STRING)
-    private VehicleStatus status;
+	private int seatQuantity;
+	private int dailyPrice;
 
-    public long getId() {
-        return id;
-    }
+	@Enumerated(EnumType.STRING)
+	private VehicleStatus status;
 
+	@Enumerated(EnumType.STRING)
+	private VehicleType type;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	@Enumerated(EnumType.STRING)
+	private FuelType fuelType;
 
-    public String getBrand() {
-        return brand;
-    }
+	@Column(name = "carCondition")
+	private String condition;
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public VehicleType getType() {
-        return type;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setType(VehicleType type) {
-        this.type = type;
-    }
+	public String getBrand() {
+		return brand;
+	}
 
-    public String getModel() {
-        return model;
-    }
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+	public VehicleType getType() {
+		return type;
+	}
 
-    public String getPlateNumber() {
-        return plateNumber;
-    }
+	public void setType(VehicleType type) {
+		this.type = type;
+	}
 
-    public void setPlateNumber(String plateNumber) {
-        this.plateNumber = plateNumber;
-    }
+	public String getModel() {
+		return model;
+	}
 
-    public int getSeatQuantity() {
-        return seatQuantity;
-    }
+	public void setModel(String model) {
+		this.model = model;
+	}
 
-    public void setSeatQuantity(int seatQuantity) {
-        this.seatQuantity = seatQuantity;
-    }
+	public String getPlateNumber() {
+		return plateNumber;
+	}
 
-    public FuelType getFuelType() {
-        return fuelType;
-    }
+	public void setPlateNumber(String plateNumber) {
+		this.plateNumber = plateNumber;
+	}
 
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
-    }
+	public int getSeatQuantity() {
+		return seatQuantity;
+	}
 
-    public String getCondition() {
-        return condition;
-    }
+	public void setSeatQuantity(int seatQuantity) {
+		this.seatQuantity = seatQuantity;
+	}
 
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
+	public FuelType getFuelType() {
+		return fuelType;
+	}
 
-    public double getDailyPrice() {
-        return dailyPrice;
-    }
+	public void setFuelType(FuelType fuelType) {
+		this.fuelType = fuelType;
+	}
 
-    public void setDailyPrice(double dailyPrice) {
-        this.dailyPrice = dailyPrice;
-    }
+	public String getCondition() {
+		return condition;
+	}
 
-    public VehicleStatus getStatus() {
-        return status;
-    }
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
 
-    public void setStatus(VehicleStatus status) {
-        this.status = status;
-    }
+	public int getDailyPrice() {
+		return dailyPrice;
+	}
+
+	public void setDailyPrice(int dailyPrice) {
+		this.dailyPrice = dailyPrice;
+	}
+
+	public VehicleStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(VehicleStatus status) {
+		this.status = status;
+	}
 }
