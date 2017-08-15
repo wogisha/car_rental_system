@@ -15,6 +15,8 @@
 <sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
 <a href="/vehicles/add" class="btn btn-default">add Vehicle</a>
 </sec:authorize>
+<a href="/vehicles/FuelTypePetrol " class="btn-default btn"> View Petrol Only cars </a>
+<a href="/vehicles/FuelTypeDiesel    " class="btn-default btn"> View Diesel Only cars </a>
 <a href="/ " class="btn-default btn">Back Home </a>
 <br/>
 <table class="table table-stripped">
