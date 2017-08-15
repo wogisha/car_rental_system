@@ -37,7 +37,10 @@ public class SecConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/cust/newCust").permitAll()
                 .antMatchers("/emp/changePw").authenticated()
                 .antMatchers("/").authenticated()
-                .antMatchers("/vehicles/**").hasAnyRole("MANAGER","EMPLOYEE")
+                .antMatchers("/vehicles/add").hasAnyRole("MANAGER","EMPLOYEE")
+                .antMatchers("/vehicles").authenticated()
+
+
                 .antMatchers("/cust/profile").hasRole("CUSTOMER")
                 .antMatchers("/cust/**").hasAnyRole("MANAGER","EMPLOYEE")
                 .antMatchers("/rental/**").hasAnyRole("MANAGER","EMPLOYEE")

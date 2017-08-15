@@ -12,7 +12,10 @@
 <body class="container"><br/>
 <h2>List of Vehicles...</h2>
 <p>${updatedVehicleMessage}</p>
-<a href="/vehicles/add" class="btn btn-default">add Vehicle</a> <a href="/ " class="btn-default btn">Back Home </a>
+<sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
+<a href="/vehicles/add" class="btn btn-default">add Vehicle</a>
+</sec:authorize>
+<a href="/ " class="btn-default btn">Back Home </a>
 <br/>
 <table class="table table-stripped">
     <tr>

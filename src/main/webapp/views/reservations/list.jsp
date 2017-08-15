@@ -37,7 +37,7 @@
     <tr>
         <td><a href="/reservations/<c:out value="${item.id}"/>"><c:out value="${item.id}"/></a></td>
         <td><c:out value="${item.vehicle} / #${item.vehicle.id}"/></td>
-        <td><c:out value="${item.pickupDate}"/></td>
+        <td><c:out value="${    item.pickupDate}"/></td>
         <td><c:out value="${item.customer.fullName} - ${item.customer.licenseNumber}"/></td>
         <td><c:out value="${item.status}"/></td>
     <tr>
