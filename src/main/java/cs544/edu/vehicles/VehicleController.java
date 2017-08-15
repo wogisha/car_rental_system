@@ -27,8 +27,33 @@ public class VehicleController {
     private VehicleServiceImpl vehicleService;
 
     @RequestMapping({"", "/welcome"})
-    public String welcome(Model model) {
-        model.addAttribute("listofVehicles", vehicleService.getAllVehicles());
+    public String welcome(Model model, @RequestParam(required = false,defaultValue = "all") String q) {
+
+        switch (q) {
+            case "FuelTypePetrol":
+                model.addAttribute("listofVehicles", vehicleService.findByfuelType(FuelType.PETROL));
+                break;
+            case "FuelTypeDiesel":
+                model.addAttribute("listofVehicles", vehicleService.findByfuelType(FuelType.DIESEL));
+                break;
+            case "outOfService":
+                model.addAttribute("listofVehicles", vehicleService.findByStatus(VehicleStatus.OUT_OF_SERVICE));
+                break;
+            case "reserved":
+                model.addAttribute("listofVehicles", vehicleService.findByStatus(VehicleStatus.RESERVED));
+                break;
+            case "rented":
+                model.addAttribute("listofVehicles", vehicleService.findByStatus(VehicleStatus.RENTED));
+                break;
+            case "available":
+                model.addAttribute("listofVehicles", vehicleService.findByStatus(VehicleStatus.AVAILABLE));
+                break;
+            default:
+                model.addAttribute("listofVehicles", vehicleService.getAllVehicles());
+                break;
+        }
+
+
         return "vehicles/displayVehicles";
     }
 
@@ -53,7 +78,7 @@ public class VehicleController {
     }
 
     @PostMapping(value = "/update/{id}")
-    public String UpdateVehicleInfoG(@PathVariable Long id,Model model, @Valid Vehicle vehicle, BindingResult result,RedirectAttributes redirectAttributes) {
+    public String UpdateVehicleInfoG(@PathVariable Long id, Model model, @Valid Vehicle vehicle, BindingResult result, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             return "vehicles/updateVehicle";
@@ -178,7 +203,7 @@ public class VehicleController {
     }
 
     @RequestMapping(value = "/view/{id}") // Find Vehicle By id
-    public String getFindProductsForm(Model model, @PathVariable("id")  Long id) {
+    public String getFindProductsForm(Model model, @PathVariable("id") Long id) {
 
         model.addAttribute("vehicleByid", vehicleService.findByVehicleId(id));
 

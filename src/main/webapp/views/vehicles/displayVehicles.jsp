@@ -15,8 +15,18 @@
 <sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
 <a href="/vehicles/add" class="btn btn-default">add Vehicle</a>
 </sec:authorize>
-<a href="/vehicles/FuelTypePetrol " class="btn-default btn"> View Petrol Only cars </a>
-<a href="/vehicles/FuelTypeDiesel    " class="btn-default btn"> View Diesel Only cars </a>
+<form action="/vehicles" method="get" class="form-inline pull-right">
+    <select name="q" class="form-control">
+        <option > All</option>
+        <option value="FuelTypePetrol" <c:if test="${param.q == 'FuelTypePetrol'}">selected</c:if> > Vehicles that Use petrol</option>
+        <option value="FuelTypeDiesel" <c:if test="${param.q == 'FuelTypeDiesel'}">selected</c:if> > Vehicles that use Diesel</option>
+        <option value="outOfService"<c:if test="${param.q == 'outOfService'}">selected</c:if> > Vehicles out of serve</option>
+        <option value="reserved" <c:if test="${param.q == 'reserved'}">selected</c:if>> Vehicles reserved </option>
+        <option value="rented" <c:if test="${param.q == 'rented'}">selected</c:if>> Vehicles that are rented</option>
+        <option value="available" <c:if test="${param.q == 'available'}">selected</c:if>> Vehicles Available</option>
+    </select>
+    <button class="btn btn-default"> filter</button>
+</form>
 <a href="/ " class="btn-default btn">Back Home </a>
 <br/>
 <table class="table table-stripped">
