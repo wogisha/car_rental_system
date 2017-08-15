@@ -26,55 +26,56 @@ import cs544.edu.entities.enums.VehicleType;
 @RequestMapping("/vehicles")
 public class VehicleController {
 
-	@Autowired
-	private VehicleServiceImpl vehicleService;
+    @Autowired
+    private VehicleServiceImpl vehicleService;
 
-	@RequestMapping({ "", "/welcome" })
-	public String welcome(Model model) {
+    @RequestMapping({"", "/welcome"})
+    public String welcome(Model model) {
 
-		model.addAttribute("greeting", "Welcome to our Car Reservation System!!");
-		model.addAttribute("tagline", "The most convienient way to get a car!");
+        model.addAttribute("greeting", "Welcome to our Car Reservation System!!");
+        model.addAttribute("tagline", "The most convienient way to get a car!");
 
-		// return "redirect:/vehicles/add"; // to add Vehicle
-		// return "vehicles/displayAllVehicles"; // Display All the Vehicles
+        // return "redirect:/vehicles/add"; // to add Vehicle
+        // return "vehicles/displayAllVehicles"; // Display All the Vehicles
 
-		return "redirect:/vehicles/findVehicleByid"; // Find Vehicle By id
-	}
+        return "redirect:/vehicles/findVehicleByid"; // Find Vehicle By id
+    }
 
-	@GetMapping(value = "/update") // Update Vehicle Information
-	public String UpdateVehicleInfo(HttpServletRequest request, Model model, @ModelAttribute Vehicle vehicle,
-			BindingResult result) {
+    @GetMapping(value = "/update") // Update Vehicle Information
+    public String UpdateVehicleInfo(HttpServletRequest request, Model model, @ModelAttribute Vehicle vehicle,
+                                    BindingResult result) {
 
-		Vehicle myvehicle = vehicleService.findByVehicleId(2);
-		model.addAttribute("vehicle", myvehicle);
+        Vehicle myvehicle = vehicleService.findByVehicleId(2);
 
-		model.addAttribute("fuels1", FuelType.values());
-		model.addAttribute("vehiclestatus1", VehicleStatus.values());
-		model.addAttribute("vehicletype1", VehicleType.values());
+        model.addAttribute("vehicle", myvehicle);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        model.addAttribute("fuels1", FuelType.values());
+        model.addAttribute("vehiclestatus1", VehicleStatus.values());
+        model.addAttribute("vehicletype1", VehicleType.values());
 
-		return "vehicles/updateVehicle";
-	}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-	@PostMapping(value = "/update")
-	public String UpdateVehicleInfoG(Model model, @Valid Vehicle vehicle, BindingResult result) {
+        return "vehicles/updateVehicle";
+    }
 
-		if (result.hasErrors()) {
-			return "vehicles/updateVehicle";
-		}
+    @PostMapping(value = "/update")
+    public String UpdateVehicleInfoG(Model model, @Valid Vehicle vehicle, BindingResult result) {
 
-		model.addAttribute("vehicless", vehicle);
+        if (result.hasErrors()) {
+            return "vehicles/updateVehicle";
+        }
 
-		vehicleService.save(vehicle);
+        model.addAttribute("vehicle", vehicle);
 
-		return "vehicles/VehicleUpdated";
-	}
+        vehicleService.save(vehicle);
+
+        return "vehicles/VehicleUpdated";
+    }
 
 	/*
-	 * @RequestMapping(value = "/brandAndQuantityOfVehicles") // List of Vahicles
+     * @RequestMapping(value = "/brandAndQuantityOfVehicles") // List of Vahicles
 	 * with specific brand and seatQuantity public String
 	 * ViewVehiclesSpecificBrandAndQuantity(HttpServletRequest request, Model
 	 * model, @Valid Vehicle vehicle, BindingResult result) {
@@ -87,151 +88,153 @@ public class VehicleController {
 	 * return "vehicles/brandAndQuantityVehicles"; }
 	 */
 
-	@RequestMapping(value = "/FuelTypePetrol") // List of Vahicles with Fuel Type as Petrol
-	public String ViewVehiclesFuelTypePetrol(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/FuelTypePetrol") // List of Vahicles with Fuel Type as Petrol
+    public String ViewVehiclesFuelTypePetrol(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                             BindingResult result) {
 
-		List<Vehicle> list = vehicleService.findByfuelType(FuelType.PETROL);
-		model.addAttribute("FuelTypePetrollist", list);
+        List<Vehicle> list = vehicleService.findByfuelType(FuelType.PETROL);
+        model.addAttribute("FuelTypePetrollist", list);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/FuelTypePetrolVehicles";
-	}
+        return "vehicles/FuelTypePetrolVehicles";
+    }
 
-	@RequestMapping(value = "/FuelTypeDiesel") // List of Vahicles with Fuel Type as Diesel
-	public String ViewVehiclesFuelTypeDiesel(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/FuelTypeDiesel") // List of Vahicles with Fuel Type as Diesel
+    public String ViewVehiclesFuelTypeDiesel(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                             BindingResult result) {
 
-		List<Vehicle> list = vehicleService.findByfuelType(FuelType.DIESEL);
-		model.addAttribute("FuelTypeDiesellist", list);
+        List<Vehicle> list = vehicleService.findByfuelType(FuelType.DIESEL);
+        model.addAttribute("FuelTypeDiesellist", list);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/FuelTypeDieselVehicles";
-	}
+        return "vehicles/FuelTypeDieselVehicles";
+    }
 
-	@RequestMapping(value = "/outOfService") // List of Out-Of-Service Vahicles
-	public String ViewOutOfServiceVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/outOfService") // List of Out-Of-Service Vahicles
+    public String ViewOutOfServiceVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                           BindingResult result) {
 
-		List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.OUT_OF_SERVICE);
-		model.addAttribute("outServicelist", list);
+        List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.OUT_OF_SERVICE);
+        model.addAttribute("outServicelist", list);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/outOfServiceVehicles";
-	}
+        return "vehicles/outOfServiceVehicles";
+    }
 
-	@RequestMapping(value = "/reserved") // List of Reserved Vahicles
-	public String ViewReservedVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/reserved") // List of Reserved Vahicles
+    public String ViewReservedVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                       BindingResult result) {
 
-		List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.RESERVED);
-		model.addAttribute("reservedlist", list);
+        List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.RESERVED);
+        model.addAttribute("reservedlist", list);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/reservedVehicles";
-	}
+        return "vehicles/reservedVehicles";
+    }
 
-	@RequestMapping(value = "/rented") // List of Rented Vahicles
-	public String ViewRentedVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/rented") // List of Rented Vahicles
+    public String ViewRentedVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                     BindingResult result) {
 
-		List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.RENTED);
-		model.addAttribute("rentedlist", list);
+        List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.RENTED);
+        model.addAttribute("rentedlist", list);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/rentedVehicles";
-	}
+        return "vehicles/rentedVehicles";
+    }
 
-	@RequestMapping(value = "/available") // List of Available Vahicles
-	public String ViewAvailableVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/available") // List of Available Vahicles
+    public String ViewAvailableVehicles(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                        BindingResult result) {
 
-		List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.AVAILABLE);
-		model.addAttribute("availablelist", list);
+        List<Vehicle> list = vehicleService.findByStatus(VehicleStatus.AVAILABLE);
+        model.addAttribute("availablelist", list);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/availableVehicles";
-	}
+        return "vehicles/availableVehicles";
+    }
 
-	@RequestMapping(value = "/deleteVehicleByid") // Delete Vehicle By id
-	public String deleteVehicle(HttpServletRequest request, Model model, @Valid Vehicle vehicle, BindingResult result) {
+    @RequestMapping(value = "/deleteVehicleByid") // Delete Vehicle By id
+    public String deleteVehicle(HttpServletRequest request, Model model, @Valid Vehicle vehicle, BindingResult result) {
 
-		vehicleService.delete(3);
+        vehicleService.delete(3);
 
-		if (result.hasErrors()) {
-			return "error";
-		}
+        if (result.hasErrors()) {
+            return "error";
+        }
 
-		return "vehicles/deleteVehicle";
-	}
+        return "vehicles/deleteVehicle";
+    }
 
-	@RequestMapping(value = "/displayAllVehicles1") // Find Vehicle By id
-	public String getFindProductsForm(Model model, @Valid Vehicle vehicle, BindingResult result) {
+    @RequestMapping(value = "/displayAllVehicles1") // Find Vehicle By id
+    public String getFindProductsForm(Model model, @Valid Vehicle vehicle, BindingResult result) {
 
-		model.addAttribute("vehicleByid", vehicleService.findByVehicleId(2));
+        model.addAttribute("vehicleByid", vehicleService.findByVehicleId(2));
 
-		if (result.hasErrors()) {
-			return "error";
-		}
-		return "vehicles/findVehicle";
-	}
+        if (result.hasErrors()) {
+            return "error";
+        }
+        return "vehicles/findVehicle";
+    }
 
-	@RequestMapping(value = "/displayAllVehicles") // Display All the Vehicles
-	public String getFindProductsForm(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @RequestMapping(value = "/displayAllVehicles") // Display All the Vehicles
+    public String getFindProductsForm(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
+                                      BindingResult result) {
 
-		model.addAttribute("listofVehicles", vehicleService.getAllVehicles());
+        model.addAttribute("listofVehicles", vehicleService.getAllVehicles());
 
-		return "vehicles/displayVehicles";
-	}
+        return "vehicles/displayVehicles";
+    }
 
-	@GetMapping(value = "/add") // Add new Vehicle
-	public String getAddNewProductForm(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @GetMapping(value = "/add") // Add new Vehicle
+    public String getAddNewProductForm(Model model, @ModelAttribute Vehicle vehicle,
+                                       BindingResult result) {
 
-		model.addAttribute("fuels", FuelType.values());
-		model.addAttribute("vehiclestatus", VehicleStatus.values());
-		model.addAttribute("vehicletype", VehicleType.values());
+        model.addAttribute("fuels", FuelType.values());
+        model.addAttribute("vehiclestatus", VehicleStatus.values());
+        model.addAttribute("vehicletype", VehicleType.values());
 
-		return "vehicles/addVehicle";
-	}
+        return "vehicles/addVehicle";
+    }
 
-	@PostMapping(value = "/add")
-	public String getAddNewProductFormG(HttpServletRequest request, Model model, @Valid Vehicle vehicle,
-			BindingResult result) {
+    @PostMapping(value = "/add")
+    public String getAddNewProductFormG(Model model, @Valid Vehicle vehicle,
+                                        BindingResult result) {
+        if (result.hasErrors()) {
+            model.addAttribute("fuels", FuelType.values());
+            model.addAttribute("vehiclestatus", VehicleStatus.values());
+            model.addAttribute("vehicletype", VehicleType.values());
+            return "vehicles/addVehicle";
+        }
 
-		model.addAttribute("newVehicle", vehicle);
-		if (result.hasErrors()) {
-			return "error";
-		}
 
-		vehicleService.save(vehicle);
+        vehicleService.save(vehicle);
 
-		return "vehicles/congrats";
-	}
+        return "redirect:/vehicles/displayAllVehicles";
+    }
 
-	@RequestMapping(value = "/error", method = RequestMethod.POST) // To check the Error
-	public String myError(HttpServletRequest request, Model model) {
-		System.out.print("error");
+    @RequestMapping(value = "/error", method = RequestMethod.POST) // To check the Error
+    public String myError(HttpServletRequest request, Model model) {
+        System.out.print("error");
 
-		return "error";
-	}
+        return "error";
+    }
 }

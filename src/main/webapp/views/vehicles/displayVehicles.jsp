@@ -5,13 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <title>Insert title here</title>
 </head>
-<body>
+<body class="container"><br/>
 	<h2>List of Vehicles...</h2>
-	<br>
 
-	<table>
+	<a href="/vehicles/add " class="btn btn-default">add Vehicle</a> <a href="/ " class="btn-default btn">Back Home </a>
+	<br/>
+	<table class="table table-stripped">
 		<c:forEach items="${listofVehicles}" var="item">
 			<tr>
 				<td><c:out value="${item.id}" /></td>

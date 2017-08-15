@@ -25,6 +25,7 @@ public class SecConfig extends WebSecurityConfigurerAdapter{
     private DataSource dataSource;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
@@ -36,6 +37,7 @@ public class SecConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/cust/newCust").permitAll()
                 .antMatchers("/emp/changePw").authenticated()
                 .antMatchers("/").authenticated()
+                .antMatchers("/vehicles/**").hasAnyRole("MANAGER","EMPLOYEE")
                 .antMatchers("/cust/profile").hasRole("CUSTOMER")
                 .antMatchers("/cust/**").hasAnyRole("MANAGER","EMPLOYEE")
                 .antMatchers("/rental/**").hasAnyRole("MANAGER","EMPLOYEE")

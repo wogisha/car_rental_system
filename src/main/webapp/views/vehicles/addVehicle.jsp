@@ -6,39 +6,42 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Vehicle</title>
-
+	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <h2>Add Vehicle</h2>
 </head>
-<body>
+<body class="container">
 	<form action="/vehicles/add" method="post">
+		<input type="hidden"
+			   name="${_csrf.parameterName}"
+			   value="${_csrf.token}"/>
 
 		brand: <input type="text" name="brand"> <br>
-		model:  <input type="text" name="model"> <br> 	
-		plateNumber: <input type="text" name="plateNumber"> <br> 
-		
-		seatQuantity: <input type="number" name="seatQuantity"> <br> 
+		model:  <input type="text" name="model"> <br>
+		plateNumber: <input type="text" name="plateNumber"> <br>
+
+		seatQuantity: <input type="number" name="seatQuantity"> <br>
 		dailyPrice: <input type="number" name="dailyPrice"> <br>
-	
+
 		 Fuel Type: <select name = "fuelType">
 		 <c:forEach var="state" items="${fuels}" >
    		 <option value="${state}">${state}</option>
-		 </c:forEach>  
+		 </c:forEach>
 		 </select> <br>
 
          Vehicle Status: <select name = "status">
 		 <c:forEach var="state1" items="${vehiclestatus}" >
    		 <option value="${state1}">${state1}</option>
-		 </c:forEach>  
+		 </c:forEach>
 		 </select> <br>
-		 
+
 		  Vehicle Type: <select name = "type">
 		 <c:forEach var="state2" items="${vehicletype}" >
    		 <option value="${state2}">${state2}</option>
-		 </c:forEach>  
+		 </c:forEach>
 		 </select> <br>
 
 	
-	<input type="submit" value="submit"> <br>
+	<input type="submit" class="btn-default btn" value="submit"> <br>
 	</form>
 </body>
 </html>

@@ -9,7 +9,7 @@
 <body class="container">
 <h3 align="center">Car rental System</h3>
 
-<a href="/vehicles " class="btn btn-block btn-default">Vehicles </a>
+<a href="/vehicles/displayAllVehicles " class="btn btn-block btn-default">Vehicles </a>
 
 <a href="/reservations " class="btn btn-block btn-default">Reservations </a>
 
