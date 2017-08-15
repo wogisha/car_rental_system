@@ -11,11 +11,11 @@ import cs544.edu.reservations.ReservationRepository;
 import cs544.edu.vehicles.VehicleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import cs544.edu.entities.Rent;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,6 +31,7 @@ public class RentalServiceImp implements RentalService {
 	@Autowired
 	private VehicleRepository vehicleRepository;
 	
+	@PreAuthorize("hasRole('EMPLOYEE','MANAGER')")
 	@Override
 	public void saveRent(Rent rent) {
 
@@ -57,6 +58,7 @@ public class RentalServiceImp implements RentalService {
 		return rentalRepository.getOne(id);
 	}
 
+	@PreAuthorize("hasRole('EMPLOYEE','MANAGER')")
 	@Override
 	public void returnedCar(Rent rent) {
 		if(rent.getReservation().getStatus().equals(ReservationStatus.COMPLETED)) {
@@ -68,10 +70,6 @@ public class RentalServiceImp implements RentalService {
 		}
 	}
 
-	@Override
-	public void updateRent(Rent rent) {
-		
-		
-	}
+	
 	
 }

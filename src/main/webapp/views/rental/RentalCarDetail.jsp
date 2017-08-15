@@ -21,71 +21,60 @@
 	<br>
 	<br>
 	<form:form action="/rental/updaterentalcar/${rent.id}" method="post"
-		modelAttribute="rent">
+		modelAttribute="rent" class ="container">
 
 		<div class="col-sm-6">
 			<div class="form-group">
-				<label for="fullName"> Driver Name </label>
-				<form:input name="fullName" class="form-control"
-					path="customer.fullName" />
-
-				<%-- <select name="customerId">
-					<c:forEach items="${customers}" var="customer">
-						<option value="${customer.id}">${customer.fullName} - ${customer.licenseNumber}</option>
-					</c:forEach>
-
-				</select> --%>
+				<label for="fullName"> Driver Name: </label>
+				<form:label path="customer.fullName">${rent.customer.fullName}</form:label>
 			</div>
 		</div>
 
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="licenseNumber"> License Number </label>
-				<form:input name="licenseNumber" class="form-control"
-					path="customer.licenseNumber" />
+				<form:label path="customer.licenseNumber">${rent.customer.licenseNumber}</form:label>
 			</div>
 		</div>
 
 		<div class="col-sm-6">
-			<label for="brand"> Rental Partner </label>
-			<form:input name="brand" class="form-control"
-				path="reservation.vehicle.brand" />
-			<div class="form-group"></div>
+			<div class="form-group">
+				<label for="brand"> Rental Partner </label> <label>${rent.reservation.vehicle.brand}
+				</label>
+			</div>
 		</div>
 
 		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="model"> Car Type </label>
-				<form:input name="model" class="form-control"
-					path="reservation.vehicle.model" />
+				<label>${rent.reservation.vehicle.model} </label>
 			</div>
 		</div>
 
 		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="rentDate"> Pick-Up Date </label>
-				<form:input type="date" name="rentDate" class="form-control"
-					path="rentDate" />
+				<form:label path="rentDate">${rent.rentDate} </form:label>
 			</div>
 		</div>
 
 		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="returnDate"> Drop-Off Date </label>
-				<form:input type="date" name="returnDate" class="form-control"
-					path="returnDate" />
+				<form:label path="returnDate">${rent.returnDate} </form:label>	
 			</div>
 		</div>
 
 		<div class="col-xs-6">
-				<a href="/" class="btn btn-primary">Back Home</a></div>
+			<a href="/" class="btn btn-primary">Back Home</a>
+		</div>
 
-		
-		<c:if test="${rent.isRented()}">  
+
+		<c:if test="${rent.isRented()}">
 			<div class="col-xs-6">
-			<button type="submit" class="btn btn-primary">Return Car</button>			
+				<button type="submit" class="btn btn-primary">Return Car</button>
 			</div>
-		 </c:if> 
+		</c:if>
 	</form:form>
 </body>
 </html>
