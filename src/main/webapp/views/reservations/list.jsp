@@ -20,7 +20,7 @@
 </ul>
 
  <a href="/" class="btn btn-default">Back Home</a>
-<a href="/reservations/add?vehicleId=1" class="btn btn-default">Make Reservation</a>
+
 
 <p>${reservation_message}</p>
 

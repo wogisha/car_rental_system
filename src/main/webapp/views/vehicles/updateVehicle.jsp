@@ -5,12 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 <title>Insert title here</title>
 </head>
-<body>
+<body class="container">
 	<h2>Update Vehicle...</h2>
 
-	<form:form modelAttribute="vehicle" action="/vehicles/update"
+	<form:form modelAttribute="vehicle" action="/vehicles/update/${vehicle.id}"
 		method="POST">
 	
 		Brand:<tr>
@@ -46,7 +47,8 @@ Fuel Type:<tr>
 			<br>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="submit" value="updateVehicle" /></td>
+			<td colspan="2"><input type="submit" value="updateVehicle" class="btn btn-default" /> <a href="/vehicles "
+																									 class="btn btn-default">Back </a></td>
 		</tr>
 
 	</form:form>

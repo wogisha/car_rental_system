@@ -40,8 +40,10 @@
 		 </c:forEach>
 		 </select> <br>
 
-	
-	<input type="submit" class="btn-default btn" value="submit"> <br>
+	<div></div>
+		<button type="submit" class="btn-default btn"> submit</button>
+		<a href="/vehicles/displayAllVehicles " class="btn btn-default">back 	</a>
+		<br>
 	</form>
 </body>
 </html>

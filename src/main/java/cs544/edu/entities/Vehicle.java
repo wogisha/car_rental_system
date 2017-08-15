@@ -111,6 +111,10 @@ public class Vehicle {
 		this.status = status;
 	}
 
+	public boolean canBeReserved(){
+		return getStatus().equals(VehicleStatus.AVAILABLE);
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s - %s (%s)", brand, model, plateNumber);

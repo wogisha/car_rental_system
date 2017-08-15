@@ -4,23 +4,20 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import cs544.edu.entities.Vehicle;
 import cs544.edu.entities.enums.FuelType;
 import cs544.edu.entities.enums.VehicleStatus;
 import cs544.edu.entities.enums.VehicleType;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/vehicles")
@@ -31,21 +28,16 @@ public class VehicleController {
 
     @RequestMapping({"", "/welcome"})
     public String welcome(Model model) {
-
-        model.addAttribute("greeting", "Welcome to our Car Reservation System!!");
-        model.addAttribute("tagline", "The most convienient way to get a car!");
-
-        // return "redirect:/vehicles/add"; // to add Vehicle
-        // return "vehicles/displayAllVehicles"; // Display All the Vehicles
-
-        return "redirect:/vehicles/findVehicleByid"; // Find Vehicle By id
+        model.addAttribute("listofVehicles", vehicleService.getAllVehicles());
+        return "vehicles/displayVehicles";
     }
 
-    @GetMapping(value = "/update") // Update Vehicle Information
-    public String UpdateVehicleInfo(HttpServletRequest request, Model model, @ModelAttribute Vehicle vehicle,
+    @GetMapping(value = "/update/{id}") // Update Vehicle Information
+    public String UpdateVehicleInfo(@PathVariable Long id, Model model, @ModelAttribute Vehicle vehicle,
                                     BindingResult result) {
 
-        Vehicle myvehicle = vehicleService.findByVehicleId(2);
+        Vehicle myvehicle = vehicleService.findByVehicleId(id);
+
 
         model.addAttribute("vehicle", myvehicle);
 
@@ -60,8 +52,8 @@ public class VehicleController {
         return "vehicles/updateVehicle";
     }
 
-    @PostMapping(value = "/update")
-    public String UpdateVehicleInfoG(Model model, @Valid Vehicle vehicle, BindingResult result) {
+    @PostMapping(value = "/update/{id}")
+    public String UpdateVehicleInfoG(@PathVariable Long id,Model model, @Valid Vehicle vehicle, BindingResult result,RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             return "vehicles/updateVehicle";
@@ -71,7 +63,8 @@ public class VehicleController {
 
         vehicleService.save(vehicle);
 
-        return "vehicles/VehicleUpdated";
+        redirectAttributes.addFlashAttribute("updatedVehicleMessage", "updated vehicle information successfully");
+        return "redirect:/vehicles";
     }
 
 	/*
@@ -172,26 +165,23 @@ public class VehicleController {
         return "vehicles/availableVehicles";
     }
 
-    @RequestMapping(value = "/deleteVehicleByid") // Delete Vehicle By id
-    public String deleteVehicle(HttpServletRequest request, Model model, @Valid Vehicle vehicle, BindingResult result) {
+    @RequestMapping(value = "/delete/{id}") // Delete Vehicle By id
+    public String deleteVehicle(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        vehicleService.delete(3);
-
-        if (result.hasErrors()) {
-            return "error";
+        try {
+            vehicleService.delete(id);
+            redirectAttributes.addFlashAttribute("updatedVehicleMessage", "vehicle deleted successfully");
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("updatedVehicleMessage", "sorry cannot delete vehicle becoz it has records associated with it  ");
         }
-
-        return "vehicles/deleteVehicle";
+        return "redirect:/vehicles";
     }
 
-    @RequestMapping(value = "/displayAllVehicles1") // Find Vehicle By id
-    public String getFindProductsForm(Model model, @Valid Vehicle vehicle, BindingResult result) {
+    @RequestMapping(value = "/view/{id}") // Find Vehicle By id
+    public String getFindProductsForm(Model model, @PathVariable("id")  Long id) {
 
-        model.addAttribute("vehicleByid", vehicleService.findByVehicleId(2));
+        model.addAttribute("vehicleByid", vehicleService.findByVehicleId(id));
 
-        if (result.hasErrors()) {
-            return "error";
-        }
         return "vehicles/findVehicle";
     }
 
