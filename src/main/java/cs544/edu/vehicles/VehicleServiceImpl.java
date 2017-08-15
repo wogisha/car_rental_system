@@ -51,15 +51,15 @@ public class VehicleServiceImpl {
 	}
 
 	public List<Vehicle> findByBrand(String brand) {
-		
+
 		return vehicleRepository.findByBrand(brand);
 	}
+
 	public List<Vehicle> findBySeatQuantity(int seatQuantity) {
-		
+
 		return vehicleRepository.findBySeatQuantity(seatQuantity);
 	}
-	
-	
+
 	/*
 	 * public List<Vehicle> findOneWithName(String available) { return
 	 * vehicleDao.findAll(Iterable<String> available); }

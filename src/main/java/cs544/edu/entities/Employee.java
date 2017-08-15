@@ -2,20 +2,33 @@ package cs544.edu.entities;
 
 
 import cs544.edu.entities.enums.UserRole;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Employee {
     @Id
     @GeneratedValue
     private long id;
+    @NotEmpty
+    @Size(min = 8,max = 100)
     private String password;
     private String username;
     private String fullName;
     private String address;
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    private boolean enabled = true;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public long getId() {
         return id;

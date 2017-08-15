@@ -12,6 +12,7 @@ public class CarRentalSystemApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }

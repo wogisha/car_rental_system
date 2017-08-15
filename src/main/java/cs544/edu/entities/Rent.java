@@ -1,132 +1,161 @@
 package cs544.edu.entities;
 
-
 import cs544.edu.entities.enums.FuelProvider;
 
 import javax.persistence.*;
+
+import java.beans.Transient;
 import java.util.Date;
 
 @Entity
 public class Rent {
-    @Id
-    @GeneratedValue
-    private long id;
-    private Date rentDate;
-    private Date returnDate;
-    private int totalRentDay;
-    private int dailyRentFee;
-    @Enumerated(EnumType.STRING)
-    private FuelProvider fuelProvidedBy;
-    private long fuelCharge;
-    private long totalPaid;
-    private long refund;
+	@Id
+	@GeneratedValue
+	private long id;
+	private Date rentDate;
+	private Date returnDate;
+	private int totalRentDay;
+	private int dailyRentFee;
+	@Enumerated(EnumType.STRING)
+	private FuelProvider fuelProvidedBy;
+	private long fuelCharge;
+	private double totalPaid;
+	private long refund;
+	
+	@ManyToOne
+	private Vehicle vehicle;
 
+	@OneToOne
+	private Reservation reservation;
 
-    @OneToOne
-    private Reservation reservation;
+	@ManyToOne
+	private Customer customer;
 
-    @ManyToOne
-    private Customer customer;
+	@ManyToOne
+	private Employee employee;
 
-    @ManyToOne
-    private Employee employee;
+	public Rent() {
 
+	}
 
-    public long getId() {
-        return id;
-    }
+	public Rent(String cusName, Date rentDate) {
+		this.customer = new Customer();
+		this.customer.setFullName(cusName);
+		this.rentDate = rentDate;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public Date getRentDate() {
-        return rentDate;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setRentDate(Date rentDate) {
-        this.rentDate = rentDate;
-    }
+	public Date getRentDate() {
+		return rentDate;
+	}
 
-    public Date getReturnDate() {
-        return returnDate;
-    }
+	public void setRentDate(Date rentDate) {
+		this.rentDate = rentDate;
+	}
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
+	public Date getReturnDate() {
+		return returnDate;
+	}
 
-    public int getTotalRentDay() {
-        return totalRentDay;
-    }
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
 
-    public void setTotalRentDay(int totalRentDay) {
-        this.totalRentDay = totalRentDay;
-    }
+	public int getTotalRentDay() {
+		return totalRentDay;
+	}
 
-    public int getDailyRentFee() {
-        return dailyRentFee;
-    }
+	public void setTotalRentDay(int totalRentDay) {
+		this.totalRentDay = totalRentDay;
+	}
 
-    public void setDailyRentFee(int dailyRentFee) {
-        this.dailyRentFee = dailyRentFee;
-    }
+	public int getDailyRentFee() {
+		return dailyRentFee;
+	}
 
-    public FuelProvider getFuelProvidedBy() {
-        return fuelProvidedBy;
-    }
+	public void setDailyRentFee(int dailyRentFee) {
+		this.dailyRentFee = dailyRentFee;
+	}
 
-    public void setFuelProvidedBy(FuelProvider fuelProvidedBy) {
-        this.fuelProvidedBy = fuelProvidedBy;
-    }
+	public FuelProvider getFuelProvidedBy() {
+		return fuelProvidedBy;
+	}
 
-    public long getFuelCharge() {
-        return fuelCharge;
-    }
+	public void setFuelProvidedBy(FuelProvider fuelProvidedBy) {
+		this.fuelProvidedBy = fuelProvidedBy;
+	}
 
-    public void setFuelCharge(long fuelCharge) {
-        this.fuelCharge = fuelCharge;
-    }
+	public long getFuelCharge() {
+		return fuelCharge;
+	}
 
-    public long getTotalPaid() {
-        return totalPaid;
-    }
+	public void setFuelCharge(long fuelCharge) {
+		this.fuelCharge = fuelCharge;
+	}
 
-    public void setTotalPaid(long totalPaid) {
-        this.totalPaid = totalPaid;
-    }
+	public double getTotalPaid() {
+		return totalPaid;
+	}
 
-    public long getRefund() {
-        return refund;
-    }
+	public void setTotalPaid(double totalPaid) {
+		this.totalPaid = totalPaid;
+	}
 
-    public void setRefund(long refund) {
-        this.refund = refund;
-    }
+	public long getRefund() {
+		return refund;
+	}
 
-    public Customer getCustomer() {
-        return customer;
-    }
+	public void setRefund(long refund) {
+		this.refund = refund;
+	}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+	public Customer getCustomer() {
+		return customer;
+	}
 
-    public Employee getEmployee() {
-        return employee;
-    }
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+	public Employee getEmployee() {
+		return employee;
+	}
 
-    public Reservation getReservation() {
-        return reservation;
-    }
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
-    }
+	public Reservation getReservation() {
+		return reservation;
+	}
 
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+	
+	@Transient
+	public double calculateCost(Date start, Date end, double price){
+		
+		int days=(int)(end.getTime()-start.getTime())/(1000*60*60*24);
+		double totPrice = price + price*days;
+		System.out.println(totPrice);
+		return totPrice;
+	}
 
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
+
+	
 }

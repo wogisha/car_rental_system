@@ -110,4 +110,9 @@ public class Vehicle {
 	public void setStatus(VehicleStatus status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s - %s (%s)", brand, model, plateNumber);
+	}
 }
