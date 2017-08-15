@@ -15,9 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import cs544.edu.entities.Customer;
 import cs544.edu.entities.Rent;
-import cs544.edu.entities.Vehicle;
 
 @Controller
 @RequestMapping("/rental")
@@ -28,13 +26,9 @@ public class ConfirmationController {
 	
 	
 	@GetMapping("confirmation")
-	public String getConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model,
+	public String getConfirmation(@ModelAttribute("rent") Rent rent, Model model,
 								  @RequestParam("reservationId") Long reservationId){
-		HttpSession session=request.getSession();
-
 		Reservation reservation = reservationService.getById(reservationId);
-
-//		rent.setDailyRentFee(reservation.getVehicle().getDailyPrice());
 
 		rent.setCustomer(reservation.getCustomer());
 		rent.setVehicle(reservation.getVehicle());
@@ -43,7 +37,7 @@ public class ConfirmationController {
 		rent.setReturnDate(reservation.getReturnDate());
 		
 		rent.setReservation(reservation);
-		session.setAttribute("rent", rent);
+
 		model.addAttribute(rent);
 		
 		return "rental/Confirmation";
@@ -58,12 +52,12 @@ public class ConfirmationController {
 	}
 	
 	@PostMapping("confirmation")
-	public String createConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request){	
+	public String createConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model){	
 		HttpSession session=request.getSession();
 		Rent rentSession = (Rent)session.getAttribute("rent");
 		//rent.setTotalPaid(rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rent.getReservation().getVehicle().getDailyPrice()));		
 		
-		double totalPaid = rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), 20.00);
+		double totalPaid = rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rent.getReservation().getVehicle().getDailyPrice());
 		rent.setTotalPaid(totalPaid);
 		rentSession.setTotalPaid(totalPaid);
 

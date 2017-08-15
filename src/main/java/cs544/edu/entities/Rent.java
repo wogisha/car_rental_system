@@ -20,7 +20,8 @@ public class Rent {
 	private FuelProvider fuelProvidedBy;
 	private long fuelCharge;
 	private double totalPaid;
-	private long refund;
+	private double refund;
+	private double extraPaid;
 	
 	@ManyToOne
 	private Vehicle vehicle;
@@ -108,11 +109,11 @@ public class Rent {
 		this.totalPaid = totalPaid;
 	}
 
-	public long getRefund() {
+	public double getRefund() {
 		return refund;
 	}
 
-	public void setRefund(long refund) {
+	public void setRefund(double refund) {
 		this.refund = refund;
 	}
 
@@ -155,6 +156,14 @@ public class Rent {
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+	}
+
+	public double getExtraPaid() {
+		return extraPaid;
+	}
+
+	public void setExtraPaid(double extraPaid) {
+		this.extraPaid = extraPaid;
 	}
 
 	

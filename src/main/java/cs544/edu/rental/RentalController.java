@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,53 +25,68 @@ import cs544.edu.entities.Rent;
 @RequestMapping("/rental")
 public class RentalController {
 
-    @Autowired
-    private RentalService rentalService;
+	@Autowired
+	private RentalService rentalService;
 
-    @InitBinder
-    public void allowEmptyDateBinding(WebDataBinder binder) {
-        // Custom Date Editor
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        simpleDateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
-    }
+	@InitBinder
+	public void allowEmptyDateBinding(WebDataBinder binder) {
+		// Custom Date Editor
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		simpleDateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
+	}
 
-    @RequestMapping("")
-    public String getAllRentals(Model model) {
-        model.addAttribute("rentals", rentalService.getAll());
-        return "rental/RentalList";
-    }
+	@RequestMapping("")
+	public String getAllRentals(Model model) {
+		model.addAttribute("rentals", rentalService.getAll());
+		return "rental/RentalList";
+	}
 
-    @RequestMapping("/checkincar")
-    public ModelAndView checkInCar() {
-        ModelAndView mv = new ModelAndView("CheckInCar");
-        mv.addObject("rent", new Rent());
-        //model.addAttribute("rent", new Rent());
-        return mv;
-    }
+	@RequestMapping("/checkincar")
+	public ModelAndView checkInCar() {
+		ModelAndView mv = new ModelAndView("CheckInCar");
+		mv.addObject("rent", new Rent());
+		// model.addAttribute("rent", new Rent());
+		return mv;
+	}
 
-    @PostMapping("/checkincar")
-    public String rentCar(@ModelAttribute("rent") Rent rent) {
-        rentalService.saveRent(rent);
-        return "rental/CheckInCar";
-    }
+	@PostMapping("/checkincar")
+	public String rentCar(@ModelAttribute("rent") Rent rent) {
+		rentalService.saveRent(rent);
+		return "rental/CheckInCar";
+	}
 
-    ///////////Test
-    @GetMapping("/checkoutcar")
-    public String getCheckoutCar(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        Rent rentSession = (Rent) session.getAttribute("rent");
+	@GetMapping("/checkoutcar")
+	public String getCheckoutCar(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		Rent rentSession = (Rent) session.getAttribute("rent");
 
-        model.addAttribute(rentSession);
-        return "rental/CheckOutCar";
-    }
+		model.addAttribute(rentSession);
+		return "rental/CheckOutCar";
+	}
 
-    @PostMapping("/payment")
-    public String saveCheckoutCar(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Rent rent = (Rent) session.getAttribute("rent");
-        rentalService.saveRent(rent);
-        //note ve home
-        return "redirect:/rental";
-    }
+	@PostMapping("/payment")
+	public String saveCheckoutCar(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Rent rent = (Rent) session.getAttribute("rent");
+		rentalService.saveRent(rent);
+		return "redirect:/rental";
+	}
+
+	@GetMapping("{id}")
+	public String viewRentalCarDetail(@PathVariable Long id, Model model) {
+		Rent rent = rentalService.getOne(id);
+		model.addAttribute("rent", rent);
+		return "rental/RentalCarDetail";
+
+	}
+
+	@PostMapping("/updaterentalcar/{id}")
+	public String updateRentalCarDetail(@PathVariable Long id, Model model) {
+		Rent rent = rentalService.getOne(id);
+		model.addAttribute("rent", rent);
+		rentalService.returnedCar(rent);
+		return "redirect:/rental/RentalList";
+		
+	}
 }
