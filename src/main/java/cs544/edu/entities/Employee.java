@@ -2,6 +2,7 @@ package cs544.edu.entities;
 
 
 import cs544.edu.entities.enums.UserRole;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -15,9 +16,13 @@ public class Employee {
     @NotEmpty
     @Size(min = 8,max = 100)
     private String password;
+
+    @Email
     private String username;
+
     private String fullName;
     private String address;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private boolean enabled = true;

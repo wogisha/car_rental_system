@@ -41,6 +41,7 @@ public class ReservationsController {
     public String makeReservation(Model model, @RequestParam(value = "vehicleId", required = false) Long vehicleId,
                                   @ModelAttribute Reservation reservation) {
         Vehicle vehicleToReserve = null;
+
         try {
             vehicleToReserve = reservationService.getVehicleToReserve(vehicleId);
         } catch (CannotReserveVehicleException ex) {

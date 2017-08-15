@@ -5,6 +5,7 @@ import cs544.edu.entities.Employee;
 import cs544.edu.entities.enums.UserRole;
 import cs544.edu.userMgmt.service.CustomerService;
 import cs544.edu.userMgmt.service.EmployeeService;
+import cs544.edu.utilities.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class CustomerController {
     @Autowired
     EmployeeService employeeService;
 
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "/newCust", method = RequestMethod.GET)
     public String createEmpForm(@ModelAttribute Employee employee, Model model) {
@@ -43,6 +46,7 @@ public class CustomerController {
             employee.setRole(UserRole.ROLE_CUSTOMER);
             employeeService.save(employee);
 
+            emailService.sendSimpleMessage(employee.getUsername(),"Welcome","Welcome to our car rental Service");
             return "redirect:/login";
         }
     }
