@@ -1,25 +1,23 @@
 package cs544.edu.rental;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
-import cs544.edu.entities.Reservation;
-import cs544.edu.entities.Vehicle;
-import cs544.edu.entities.enums.RentStatus;
-import cs544.edu.entities.enums.ReservationStatus;
-import cs544.edu.entities.enums.VehicleStatus;
-import cs544.edu.reservations.ReservationRepository;
-import cs544.edu.vehicles.VehicleRepository;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import cs544.edu.entities.Rent;
-
-import java.util.List;
+import cs544.edu.entities.Reservation;
+import cs544.edu.entities.Vehicle;
+import cs544.edu.entities.enums.RentStatus;
+import cs544.edu.entities.enums.ReservationStatus;
+import cs544.edu.entities.enums.VehicleStatus;
+import cs544.edu.reservations.repositories.ReservationRepository;
+import cs544.edu.vehicles.VehicleRepository;
 
 //@PreAuthorize("hasRole('EMPLOYEE','MANAGER')")
 @Service

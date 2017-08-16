@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cs544.edu.entities.Rent;
 import cs544.edu.entities.Reservation;
-import cs544.edu.reservations.ReservationService;
+import cs544.edu.reservations.services.ReservationService;
 
 @Controller
 @RequestMapping("/rental")

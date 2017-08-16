@@ -129,8 +129,8 @@ public class RentalController {
 		return "redirect:/rental";
 
 	}
-	@Scheduled(cron="0 0 8 * * * *")
-	public void sendEmailToCustomerRentCar() {
-		
-	}
+//	@Scheduled(cron="0 0 8 * * * *")
+//	public void sendEmailToCustomerRentCar() {
+//		
+//	}
 }

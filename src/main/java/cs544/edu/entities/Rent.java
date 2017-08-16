@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import cs544.edu.entities.enums.FuelProvider;
 import cs544.edu.entities.enums.RentStatus;
-import cs544.edu.reservations.CustomFuture;
+import cs544.edu.reservations.validators.CustomFuture;
 
 @Entity
 public class Rent {
