@@ -17,7 +17,7 @@
 	<h3>Rental List</h3>
 
 	<ul class="pagination center-block">
-		<c:forEach var="i" begin="1" end="${rentals.totalPages}">
+		<c:forEach var="i" begin="1" end="${rent.totalPages}">
 			<li class="${page == i ? 'active':' '}"><a
 				href="/rental?q=${param.q}&page=<c:out value = "${i}"/>"><c:out
 						value="${i}" /> </a></li>

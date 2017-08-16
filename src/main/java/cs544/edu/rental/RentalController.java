@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import cs544.edu.entities.Rent;
 import cs544.edu.utilities.EmailService;
 
@@ -78,20 +79,28 @@ public class RentalController {
 	// }
 
 	@GetMapping("/checkoutcar")
-	public String getCheckoutCar(@ModelAttribute("rent") @Valid Rent rent, HttpServletRequest request, Model model) {
+	public String getCheckoutCar(@ModelAttribute("rent") Rent rent, HttpServletRequest request, BindingResult bindingResult, Model model) {
 		HttpSession session = request.getSession();
-		rent = (Rent) session.getAttribute("rent");
-		model.addAttribute(rent);
+		Rent rentSession = (Rent) session.getAttribute("rent");
+		model.addAttribute("rent", rentSession);
+		if (bindingResult.hasErrors()) {			
+			System.out.println("Get checkoutcar ${rent.rentDate}");
+			System.out.println(bindingResult.getAllErrors());
+			return "rental/Confirmation";
+		} else {
 		return "rental/CheckOutCar";
+		}
 	}
 
 	@PostMapping("/payment")
-	public String saveCheckoutCar(HttpServletRequest request, @ModelAttribute("rent") @Valid Rent rent,
+	public String saveCheckoutCar(HttpServletRequest request, @ModelAttribute("rent") Rent rent,
 			BindingResult bindingResult, Model model, EmailService emailService) {
 		HttpSession session = request.getSession();
 		rent = (Rent) session.getAttribute("rent");
+		
 		model.addAttribute("rent", rent);
 		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
 			return "rental/Confirmation";
 		} else {
 			rentalService.saveRent(rent);
@@ -120,7 +129,7 @@ public class RentalController {
 		return "redirect:/rental";
 
 	}
-	@Scheduled(cron="")
+	@Scheduled(cron="0 0 8 * * * *")
 	public void sendEmailToCustomerRentCar() {
 		
 	}

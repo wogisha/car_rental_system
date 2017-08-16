@@ -10,23 +10,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.jpa.repository.Temporal;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import cs544.edu.entities.Reservation.NewReservation;
 import cs544.edu.entities.enums.FuelProvider;
 import cs544.edu.entities.enums.RentStatus;
+import cs544.edu.reservations.CustomFuture;
 
 @Entity
 public class Rent {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@NotEmpty (message="{rent.rentDate}")
+
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@CustomFuture(groups = { ValidateDate.class })
 	private Date rentDate;
-	@NotEmpty (message="{rent.returnDate}")
+
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@CustomFuture(groups = { ValidateDate.class }, todayDate = false, message = "Should be in the future")
 	private Date returnDate;
-	
+
 	private int totalRentDay;
 	private int dailyRentFee;
 	@Enumerated(EnumType.STRING)
@@ -190,10 +200,12 @@ public class Rent {
 	}
 
 	public boolean isRented() {
-		if(rentStatus.equals(RentStatus.RENTED)) {
+		if (rentStatus.equals(RentStatus.RENTED)) {
 			return true;
 		}
 		return false;
 	}
 
+	public interface ValidateDate {
+	}
 }

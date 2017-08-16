@@ -102,6 +102,22 @@ public class RentalServiceImp implements RentalService {
 		PageRequest request = new PageRequest(page, 10);
 		return request;
 	}
+
+	@Override
+	public List<Rent> getCustomerReturnCarLate() {
+		
+		return null;
+	}
+
+	@Override
+	public Rent getCustomerReturnCar(long id) {
+		return rentalRepository.findOne(id);
+	}
+
+	@Override
+	public Rent getCustomerRentCar(long id) {
+		return rentalRepository.findOne(id);
+	}
 	
 
 }

@@ -33,14 +33,14 @@
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="brand"> Rental Partner: </label>
-				<label>${sessionScope.rent.reservation.vehicle.brand} </label>	
+				<form:label path="reservation.vehicle.brand">${rent.reservation.vehicle.brand}</form:label>
 			</div>
 		</div>
 
 		<div class="col-xs-6">
 			<div class="form-group">
 				<label for="model"> Car Type: </label>
-				<label>${sessionScope.rent.reservation.vehicle.model} </label>	
+				<form:label path="reservation.vehicle.model">${rent.reservation.vehicle.model}</form:label>
 			</div>
 		</div>
 		 

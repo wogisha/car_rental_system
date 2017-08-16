@@ -5,17 +5,24 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
-import cs544.edu.entities.Reservation;
-import cs544.edu.reservations.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cs544.edu.entities.Rent;
+import cs544.edu.entities.Reservation;
+import cs544.edu.reservations.ReservationService;
 
 @Controller
 @RequestMapping("/rental")
@@ -26,7 +33,7 @@ public class ConfirmationController {
 	
 	
 	@GetMapping("confirmation")
-	public String getConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model,
+	public String getConfirmation( @ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model,
 								  @RequestParam("reservationId") Long reservationId){
 		HttpSession session=request.getSession();
 
@@ -56,10 +63,9 @@ public class ConfirmationController {
 	}
 	
 	@PostMapping("confirmation")
-	public String createConfirmation(@ModelAttribute("rent") Rent rent, HttpServletRequest request, Model model){	
+	public String createConfirmation(@ModelAttribute("rent") @Valid Rent rent, HttpServletRequest request, Model model){	
 		HttpSession session=request.getSession();
 		Rent rentSession = (Rent)session.getAttribute("rent");
-		//rent.setTotalPaid(rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rent.getReservation().getVehicle().getDailyPrice()));		
 		
 		double totalPaid = rent.calculateCost(rent.getRentDate(), rent.getReturnDate(), rentSession.getReservation().getVehicle().getDailyPrice());
 		rent.setTotalPaid(totalPaid);
@@ -70,7 +76,7 @@ public class ConfirmationController {
 		
 		rentSession.setRentDate(rent.getRentDate());
 		rentSession.setReturnDate(rent.getReturnDate());
-		
+		rent = rentSession;
 		model.addAttribute(rentSession);
 		return "redirect:/rental/checkoutcar";
 	}
