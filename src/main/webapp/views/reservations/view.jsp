@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +35,9 @@
 <a href="/reservations" class="btn btn-default">Back to Reservations</a>
 
 <c:if test="${reservation.newReservation}">
-    <a href="/rental/confirmation?reservationId=${reservation.id}" class="btn btn-default">Rent out car</a>
+    <sec:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGER')">
+        <a href="/rental/confirmation?reservationId=${reservation.id}" class="btn btn-default">Rent out car</a>
+    </sec:authorize>
     <a href="/reservations/<c:out value="${id}/cancel"/>" class="btn btn-default">Cancel Reservation</a>
 </c:if>
 

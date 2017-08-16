@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,28 +19,36 @@
            name="vehicleId"
            value="${vehicle.id}"/>
     <div>
-        Vehicle <input type="text"  value="<c:out value="${vehicle}"/>" disabled="disabled">
+        Vehicle <input type="text" value="<c:out value="${vehicle}"/>" disabled="disabled">
     </div>
 
+    <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+        <input type="hidden" name="customerId" value="${customer.id}"/>
+    </sec:authorize>
+
+    <sec:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGER')">
+        <div>
+            Customer
+            <select name="customerId">
+                <c:forEach items="${customers}" var="customer">
+                    <option value="${customer.id}"
+                            <c:if test="${customer.id == customerId}">selected</c:if>
+                    >${customer.fullName} - ${customer.licenseNumber}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </sec:authorize>
     <div>
-        Customer
-        <select name="customerId" >
-            <c:forEach items="${customers}" var="customer">
-                <option value="${customer.id}">${customer.fullName} - ${customer.licenseNumber}</option>
-            </c:forEach>
-        </select>
-    </div>
-    <div>
-        When you want to pick it up ? <form:input path="pickupDate" type="date" />
-        <form:errors path="pickupDate" />
+        When you want to pick it up ? <form:input path="pickupDate" type="date"/>
+        <form:errors path="pickupDate"/>
     </div>
 
     <div>
         when will you return it? <form:input path="returnDate" type="date"/>
-        <form:errors path="returnDate" />
+        <form:errors path="returnDate"/>
     </div>
 
-    <button class="btn btn-default"> make reservation </button>
+    <button class="btn btn-default"> make reservation</button>
     <a href="/reservations" class="btn btn-default">Back to Reservations</a>
 
 </form:form>

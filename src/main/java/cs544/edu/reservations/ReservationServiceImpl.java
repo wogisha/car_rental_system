@@ -5,8 +5,6 @@ import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import cs544.edu.entities.Vehicle;
 import cs544.edu.entities.enums.ReservationStatus;

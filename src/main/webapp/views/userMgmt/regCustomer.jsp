@@ -15,6 +15,7 @@
 <div class="container">
     <div align="center" style="width: 50%">
         <h1>Please Complete all the fields!</h1>
+        ${customerProfileMessage}
         <form:form method="POST" modelAttribute="customer">
             <input name="id" type="hidden" value="${customer.id}">
             <div class="form-group">
