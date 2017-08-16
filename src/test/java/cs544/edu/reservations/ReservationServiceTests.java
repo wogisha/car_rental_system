@@ -1,29 +1,36 @@
 package cs544.edu.reservations;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-import cs544.edu.entities.Customer;
-import cs544.edu.entities.Employee;
-import cs544.edu.entities.Reservation;
-import cs544.edu.entities.Vehicle;
-import cs544.edu.entities.enums.*;
-import cs544.edu.userMgmt.repository.CustomerRepository;
-import cs544.edu.userMgmt.repository.EmployeeRepository;
-import cs544.edu.vehicles.VehicleRepository;
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.transaction.Transactional;
-
-import static org.junit.Assert.*;
+import cs544.edu.entities.Customer;
+import cs544.edu.entities.Employee;
+import cs544.edu.entities.Reservation;
+import cs544.edu.entities.Vehicle;
+import cs544.edu.entities.enums.FuelType;
+import cs544.edu.entities.enums.ReservationStatus;
+import cs544.edu.entities.enums.UserRole;
+import cs544.edu.entities.enums.VehicleStatus;
+import cs544.edu.entities.enums.VehicleType;
+import cs544.edu.reservations.services.ReservationService;
+import cs544.edu.userMgmt.repository.CustomerRepository;
+import cs544.edu.userMgmt.repository.EmployeeRepository;
+import cs544.edu.vehicles.VehicleRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)

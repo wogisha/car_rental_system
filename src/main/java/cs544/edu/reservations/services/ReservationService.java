@@ -1,4 +1,4 @@
-package cs544.edu.reservations;
+package cs544.edu.reservations.services;
 
 
 import java.util.List;

@@ -1,10 +1,12 @@
-package cs544.edu.reservations;
+package cs544.edu.reservations.utilities;
 
 import java.util.List;
 
-import cs544.edu.utilities.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import cs544.edu.reservations.services.ReservationService;
+import cs544.edu.utilities.EmailService;
 
 public class ReservationsCronJob {
 

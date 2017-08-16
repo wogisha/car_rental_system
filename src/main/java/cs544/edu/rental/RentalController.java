@@ -2,10 +2,10 @@ package cs544.edu.rental;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import cs544.edu.entities.Rent;
 import cs544.edu.utilities.EmailService;
 
@@ -33,6 +32,9 @@ public class RentalController {
 
 	@Autowired
 	private RentalService rentalService;
+	
+	@Autowired
+    private EmailService emailService;
 
 	@InitBinder
 	public void allowEmptyDateBinding(WebDataBinder binder) {
@@ -94,7 +96,7 @@ public class RentalController {
 
 	@PostMapping("/payment")
 	public String saveCheckoutCar(HttpServletRequest request, @ModelAttribute("rent") Rent rent,
-			BindingResult bindingResult, Model model, EmailService emailService) {
+			BindingResult bindingResult, Model model) {
 		HttpSession session = request.getSession();
 		rent = (Rent) session.getAttribute("rent");
 		
@@ -104,10 +106,10 @@ public class RentalController {
 			return "rental/Confirmation";
 		} else {
 			rentalService.saveRent(rent);
-			String custName = rent.getReservation().getCustomer().getFullName(); 
-//			emailService.sendSimpleMessage(custName, "Welcome" + custName,
-//					"Welcome to our car rental Service!"
-//					+ "Thank you for choosing our service! Have a nice and safe trip!");
+			String custEmail = rent.getEmployee().getUsername(); 
+			emailService.sendSimpleMessage(custEmail, "Welcome" + custEmail,
+					"Welcome to our car rental Service!"
+					+ "Thank you for choosing our service! Have a nice and safe trip!");
 			return "redirect:/rental";
 		}
 	}
@@ -129,8 +131,14 @@ public class RentalController {
 		return "redirect:/rental";
 
 	}
-//	@Scheduled(cron="0 0 8 * * * *")
-//	public void sendEmailToCustomerRentCar() {
-//		
-//	}
+	
+	@Scheduled(cron="0 0/30 * * * *")
+	public void sendEmailToCustomerRenturnCar() {
+		List<Rent> custList = rentalService.getCustomerReturnCar();
+		
+		for(Rent cust: custList) {
+			String custEmail = cust.getEmployee().getUsername();
+			emailService.sendSimpleMessage(custEmail, "Thank you", "Thank you for using our services!");
+		}
+	}
 }

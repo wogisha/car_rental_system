@@ -22,10 +22,8 @@ public interface RentalService {
 
 	public Page<Rent> getCustomerRentCarById(String customerLicenceId, int page);
 	
-	public List<Rent> getCustomerReturnCarLate();
+	public List<Rent> getCustomerReturnCar();
 	
-	public Rent getCustomerReturnCar(long id);
 	
-	public Rent getCustomerRentCar(long id);
 
 }

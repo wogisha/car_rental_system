@@ -1,22 +1,30 @@
-package cs544.edu.reservations;
+package cs544.edu.reservations.controller;
 
 
-import cs544.edu.entities.Customer;
-import cs544.edu.entities.Reservation;
-import cs544.edu.entities.Vehicle;
-import cs544.edu.userMgmt.service.CustomerService;
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.security.Principal;
+import cs544.edu.entities.Customer;
+import cs544.edu.entities.Reservation;
+import cs544.edu.entities.Vehicle;
+import cs544.edu.reservations.exceptions.CannotReserveVehicleException;
+import cs544.edu.reservations.services.ReservationService;
+import cs544.edu.userMgmt.service.CustomerService;
 
 @Controller
 @RequestMapping("/reservations")

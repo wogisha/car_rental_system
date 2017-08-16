@@ -1,27 +1,28 @@
-package cs544.edu.reservations;
+package cs544.edu.reservations.services;
 
-
-import cs544.edu.entities.Customer;
-import cs544.edu.entities.Reservation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import cs544.edu.entities.Vehicle;
-import cs544.edu.entities.enums.ReservationStatus;
-import cs544.edu.entities.enums.VehicleStatus;
-import cs544.edu.userMgmt.repository.CustomerRepository;
-import cs544.edu.utilities.EmailService;
-import cs544.edu.vehicles.VehicleRepository;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
+import cs544.edu.entities.Customer;
+import cs544.edu.entities.Reservation;
+import cs544.edu.entities.Vehicle;
+import cs544.edu.entities.enums.ReservationStatus;
+import cs544.edu.entities.enums.VehicleStatus;
+import cs544.edu.reservations.exceptions.CannotReserveVehicleException;
+import cs544.edu.reservations.repositories.ReservationRepository;
+import cs544.edu.userMgmt.repository.CustomerRepository;
+import cs544.edu.utilities.EmailService;
+import cs544.edu.vehicles.VehicleRepository;
 
 @Service
 

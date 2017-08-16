@@ -1,5 +1,4 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,13 +6,13 @@
 <body class="container">
 
 <h3>Reservations</h3>
-<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_MANAGER')">
+
 <form action="/reservations" method="get" class="pull-right">
 
     <input type="text" name="q" placeholder="Customer Licence" value="<c:out value="${param.q}"/>">
     <button class="btn btn-default"> Search</button>
 </form>
-</sec:authorize>
+
 <ul class="pagination center-block">
     <c:forEach var="i" begin="1" end="${reservations.totalPages}">
         <li class="${page == i ? 'active':' '}"><a href="/reservations?q=${param.q}&page=<c:out value = "${i}"/>" ><c:out value = "${i}"/> </a> </li>

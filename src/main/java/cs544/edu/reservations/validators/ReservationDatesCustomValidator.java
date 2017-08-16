@@ -1,4 +1,4 @@
-package cs544.edu.reservations;
+package cs544.edu.reservations.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

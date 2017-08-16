@@ -102,20 +102,11 @@ public class RentalServiceImp implements RentalService {
 	}
 
 	@Override
-	public List<Rent> getCustomerReturnCarLate() {
-		
-		return null;
+	public List<Rent> getCustomerReturnCar() {		
+		return rentalRepository.findByRentStatus(RentStatus.RETURNED);
 	}
 
-	@Override
-	public Rent getCustomerReturnCar(long id) {
-		return rentalRepository.findOne(id);
-	}
-
-	@Override
-	public Rent getCustomerRentCar(long id) {
-		return rentalRepository.findOne(id);
-	}
+	
 	
 
 }

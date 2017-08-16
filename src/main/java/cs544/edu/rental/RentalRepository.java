@@ -11,7 +11,8 @@ import cs544.edu.entities.enums.RentStatus;
 
 public interface RentalRepository extends JpaRepository<Rent, Long> {
 
-//	List<Rent> findByStatus(RentStatus rentStatus);
+	List<Rent> findByRentStatus(RentStatus rentStatus);
+	
 	Page<Rent> findByOrderByIdDesc(Pageable pageRequest);
 
 	Page<Rent> findByCustomer_IdOrderByIdDesc(Long rentId, Pageable pageable);
