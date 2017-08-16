@@ -15,6 +15,15 @@
 <body class="container">
 
 	<h3>Rental List</h3>
+
+	<ul class="pagination center-block">
+		<c:forEach var="i" begin="1" end="${rent.totalPages}">
+			<li class="${page == i ? 'active':' '}"><a
+				href="/rental?q=${param.q}&page=<c:out value = "${i}"/>"><c:out
+						value="${i}" /> </a></li>
+		</c:forEach>
+	</ul>
+
 	<a href="/" class="btn btn-default">Back Home</a>
 	<table class="table table-striped">
 		<tr>

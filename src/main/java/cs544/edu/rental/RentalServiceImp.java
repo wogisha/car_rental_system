@@ -11,6 +11,9 @@ import cs544.edu.reservations.ReservationRepository;
 import cs544.edu.vehicles.VehicleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,11 @@ import cs544.edu.entities.Rent;
 
 import java.util.List;
 
+//@PreAuthorize("hasRole('EMPLOYEE','MANAGER')")
 @Service
 @Transactional
 public class RentalServiceImp implements RentalService {
-	
+
 	@Autowired
 	private RentalRepository rentalRepository;
 
@@ -30,8 +34,7 @@ public class RentalServiceImp implements RentalService {
 
 	@Autowired
 	private VehicleRepository vehicleRepository;
-	
-	@PreAuthorize("hasRole('EMPLOYEE','MANAGER')")
+
 	@Override
 	public void saveRent(Rent rent) {
 
@@ -40,7 +43,7 @@ public class RentalServiceImp implements RentalService {
 
 		Vehicle vehicle = rent.getVehicle();
 		vehicle.setStatus(VehicleStatus.RENTED);
-		
+
 		rent.setRentStatus(RentStatus.RENTED);
 
 		rentalRepository.save(rent);
@@ -58,18 +61,63 @@ public class RentalServiceImp implements RentalService {
 		return rentalRepository.getOne(id);
 	}
 
-	@PreAuthorize("hasRole('EMPLOYEE','MANAGER')")
 	@Override
 	public void returnedCar(Rent rent) {
-		if(rent.getReservation().getStatus().equals(ReservationStatus.COMPLETED)) {
-			if(rent.getReservation().getVehicle().getStatus().equals(VehicleStatus.RENTED)) {
+		if (rent.getReservation().getStatus().equals(ReservationStatus.COMPLETED)) {
+			if (rent.getReservation().getVehicle().getStatus().equals(VehicleStatus.RENTED)) {
 				Vehicle vehicle = rent.getVehicle();
 				vehicle.setStatus(VehicleStatus.AVAILABLE);
-				rent.setRentStatus(RentStatus.RETURNED);				
+				rent.setRentStatus(RentStatus.RETURNED);
 			}
 		}
 	}
 
+	@Override
+	public Page<Rent> getAllCustomersRentCar(int page) {
+		return rentalRepository.findByOrderByIdDesc(gotoPage(page));
+	}
+
+//	Dont use
+//	@Override
+//	public Page<Rent> getCustomersRentCar(Long customerId, int page) {
+//		return rentalRepository.findByCustomer_IdOrderByIdDesc(customerId, gotoPage(page));
+//	}
+
+	@Override
+	public Page<Rent> getCustomerRentCarById(String customerLicenceId, int page) {
+		Long recordId = -1L;
+
+		try {
+			recordId = Long.parseLong(customerLicenceId);
+		} catch (NumberFormatException ex) {
+			ex.printStackTrace();
+
+		}
+
+		return rentalRepository.findByCustomer_licenseNumberContainingOrIdOrderByIdDesc(customerLicenceId,
+				recordId, gotoPage(page));
+	}
 	
+	private Pageable gotoPage(int page) {
+		PageRequest request = new PageRequest(page, 10);
+		return request;
+	}
+
+	@Override
+	public List<Rent> getCustomerReturnCarLate() {
+		
+		return null;
+	}
+
+	@Override
+	public Rent getCustomerReturnCar(long id) {
+		return rentalRepository.findOne(id);
+	}
+
+	@Override
+	public Rent getCustomerRentCar(long id) {
+		return rentalRepository.findOne(id);
+	}
 	
+
 }

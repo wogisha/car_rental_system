@@ -1,13 +1,12 @@
 package cs544.edu.reservations;
 
+
 import java.util.Date;
 import java.util.List;
 
-import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 import cs544.edu.entities.enums.ReservationStatus;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
