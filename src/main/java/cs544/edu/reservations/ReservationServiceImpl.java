@@ -4,12 +4,14 @@ package cs544.edu.reservations;
 import cs544.edu.entities.Customer;
 import cs544.edu.entities.Reservation;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import cs544.edu.entities.Vehicle;
 import cs544.edu.entities.enums.ReservationStatus;
 import cs544.edu.entities.enums.VehicleStatus;
 import cs544.edu.userMgmt.repository.CustomerRepository;
+import cs544.edu.utilities.EmailService;
 import cs544.edu.vehicles.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,10 +19,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 @Service
-@Transactional
+
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
@@ -31,12 +35,17 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
+    @Transactional
     public Page<Reservation> getCustomerReservations(Long customerId, int page) {
-        return reservationRepository.findByCustomer_IdOrderByIdDesc(customerId,gotoPage(page));
+        return reservationRepository.findByCustomer_IdOrderByIdDesc(customerId, gotoPage(page));
     }
 
     @Override
+    @Transactional
     public Page<Reservation> getCustomerReservationsById(String customerLicenceId, int page) {
         Long recordId = -1L;
 
@@ -47,10 +56,11 @@ public class ReservationServiceImpl implements ReservationService {
 
         }
 
-        return reservationRepository.findByCustomer_licenseNumberContainingOrIdOrderByIdDesc(customerLicenceId,recordId,gotoPage(page));
+        return reservationRepository.findByCustomer_licenseNumberContainingOrIdOrderByIdDesc(customerLicenceId, recordId, gotoPage(page));
     }
 
     @Override
+    @Transactional
     public Page<Reservation> getAllReservations(int page) {
 
         return reservationRepository.findByOrderByIdDesc(gotoPage(page));
@@ -58,6 +68,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 
     @Override
+    @Transactional
     public void makeReservation(Reservation reservation, Long customerId, Vehicle vehicleToReserve) {
 
 
@@ -73,6 +84,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findOne(reservationId);
         reservation.setStatus(ReservationStatus.CANCELLED);
@@ -84,16 +96,19 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public Reservation getById(Long reservationId) {
         return reservationRepository.findOne(reservationId);
     }
 
     @Override
+    @Transactional
     public void updateReservation(Reservation reservation) {
         reservationRepository.save(reservation);
     }
 
     @Override
+    @Transactional
     public Vehicle getVehicleToReserve(Long vehicleId) {
 
         Vehicle vehicle = vehicleRepository.findOne(vehicleId);
@@ -107,13 +122,35 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public Iterable<Customer> getCustomers() {
         return customerRepository.findAll();
     }
 
-    private Pageable gotoPage(int page)
-    {
+    private Pageable gotoPage(int page) {
         PageRequest request = new PageRequest(page, 10);
         return request;
+    }
+
+    @Transactional
+    public List<String> cancelDelayedReservations() {
+        List<String> emailsToSend = new ArrayList<>();
+
+        List<Reservation> reservationList = reservationRepository.findByPickupDateLessThanAndStatus(new Date(), ReservationStatus.RESERVED);
+
+        for(int i = 0; i < reservationList.size(); i++) {
+
+            Reservation reservation = reservationList.get(i);
+            Vehicle vehicle = reservation.getVehicle();
+            vehicle.setStatus(VehicleStatus.AVAILABLE);
+            reservation.setStatus(ReservationStatus.CANCELLED);
+
+            emailsToSend.add(reservation.getCustomer().getEmployee().getUsername());
+
+            vehicleRepository.save(vehicle);
+            reservationRepository.save(reservation);
+        }
+
+        return emailsToSend;
     }
 }

@@ -25,4 +25,6 @@ public interface ReservationService {
 
     Iterable<Customer> getCustomers();
 
+    List<String> cancelDelayedReservations();
+
 }
