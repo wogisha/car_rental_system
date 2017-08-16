@@ -11,17 +11,22 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import cs544.edu.entities.enums.FuelProvider;
 import cs544.edu.entities.enums.RentStatus;
-import cs544.edu.entities.enums.VehicleStatus;
 
 @Entity
 public class Rent {
 	@Id
 	@GeneratedValue
 	private long id;
+	
+	@NotEmpty (message="{rent.rentDate}")
 	private Date rentDate;
+	@NotEmpty (message="{rent.returnDate}")
 	private Date returnDate;
+	
 	private int totalRentDay;
 	private int dailyRentFee;
 	@Enumerated(EnumType.STRING)

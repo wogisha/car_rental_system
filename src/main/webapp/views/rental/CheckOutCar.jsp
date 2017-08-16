@@ -66,7 +66,7 @@
 		</div>
 
 		<div class="col-xs-12"><button type="submit" class="btn btn-primary">Payment</button>
-		<div class="col-xs-6"><a href="/" class="btn btn-primary">Back Home</a></div></div>
+		<div class="col-xs-2"><a href="/" class="btn btn-primary">Back Home</a></div></div>
 		
 	</form:form>
 </body>
