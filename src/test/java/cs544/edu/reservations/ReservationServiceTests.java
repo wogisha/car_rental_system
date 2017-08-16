@@ -1,27 +1,27 @@
 package cs544.edu.reservations;
 
 
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 
 import cs544.edu.entities.Customer;
+import cs544.edu.entities.Employee;
 import cs544.edu.entities.Reservation;
 import cs544.edu.entities.Vehicle;
-import cs544.edu.entities.enums.FuelType;
-import cs544.edu.entities.enums.ReservationStatus;
-import cs544.edu.entities.enums.VehicleStatus;
-import cs544.edu.entities.enums.VehicleType;
+import cs544.edu.entities.enums.*;
 import cs544.edu.userMgmt.repository.CustomerRepository;
+import cs544.edu.userMgmt.repository.EmployeeRepository;
 import cs544.edu.vehicles.VehicleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -38,6 +38,45 @@ public class ReservationServiceTests {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+
+    private Employee createEmployee() {
+
+        Employee employee = new Employee();
+        employee.setFullName("ne");
+        employee.setUsername("wogisha@gmail.com");
+        employee.setRole(UserRole.ROLE_CUSTOMER);
+        employee.setAddress("adddess");
+        employee.setEnabled(true);
+        employee.setPassword("1234567890");
+
+        return employee;
+    }
+
+    private Customer createCustomer() {
+        Customer customer = new Customer();
+        customer.setFullName("123");
+        customer.setNationality("nation");
+        customer.setLicenseNumber("321");
+        customer.setCountry("country");
+        return customer;
+    }
+
+    private Vehicle createTestVehicle() {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setBrand("Toyota");
+        vehicle.setCondition("new");
+        vehicle.setDailyPrice(10);
+        vehicle.setFuelType(FuelType.PETROL);
+        vehicle.setModel("has bacl");
+        vehicle.setPlateNumber("1234");
+        vehicle.setSeatQuantity(4);
+        vehicle.setStatus(VehicleStatus.AVAILABLE);
+        vehicle.setType(VehicleType.Hatchback);
+        return vehicle;
+    }
 
     @Test
     public void testReservationServiceCreated() {
@@ -52,7 +91,7 @@ public class ReservationServiceTests {
         reservation.setStatus(ReservationStatus.RESERVED);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.set(Calendar.YEAR,calendar.get(Calendar.YEAR)+ 1);
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 1);
         Date date = calendar.getTime();
 
         reservation.setPickupDate(date);
@@ -71,15 +110,16 @@ public class ReservationServiceTests {
         assertNotNull(reservation.getId());
 
     }
+
     @Test
-    public void testSaveVehicle(){
+    public void testSaveVehicle() {
         int sizeBefore = vehicleRepository.findAll().size();
         Vehicle vehicle = createTestVehicle();
         vehicleRepository.save(vehicle);
 
         int sizeAfter = vehicleRepository.findAll().size();
 
-        assertEquals(sizeBefore+ 1,sizeAfter);
+        assertEquals(sizeBefore + 1, sizeAfter);
 
         Reservation reservation = createReservation();
 
@@ -87,7 +127,6 @@ public class ReservationServiceTests {
         reservationService.makeReservation(reservation, 1L, vehicle);
 
         assertNotNull(reservation.getId());
-
 
 
     }
@@ -125,29 +164,29 @@ public class ReservationServiceTests {
 
     @Test(expected = NullPointerException.class)
     public void testGetReservationsByCustomerId() {
-        Customer customer = getCustomer();
+        Customer customer = createCustomer();
 
         customerRepository.save(customer);
 
-        Page<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId(),0);
+        Page<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId(), 0);
 
         assertEquals(reservationList.getTotalPages(), 0);
 
         Reservation reservation = createReservation();
 
-        reservationService.makeReservation(reservation, customer.getId(),null );
+        reservationService.makeReservation(reservation, customer.getId(), null);
 
-        reservationList = reservationService.getCustomerReservations(customer.getId(),0);
+        reservationList = reservationService.getCustomerReservations(customer.getId(), 0);
 
         assertEquals(reservationList.getTotalPages(), 1);
     }
 
     @Test
     public void testCancellingReservation() {
-        Customer customer = getCustomer();
+        Customer customer = createCustomer();
         customerRepository.save(customer);
 
-        Page<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId(),0);
+        Page<Reservation> reservationList = reservationService.getCustomerReservations(customer.getId(), 0);
 
         assertEquals(reservationList.getTotalPages(), 0);
 
@@ -157,9 +196,9 @@ public class ReservationServiceTests {
         vehicleRepository.save(vehicle);
 
 
-        reservationService.makeReservation(reservation, customer.getId(),vehicle );
+        reservationService.makeReservation(reservation, customer.getId(), vehicle);
 
-        reservationList = reservationService.getCustomerReservations(customer.getId(),0);
+        reservationList = reservationService.getCustomerReservations(customer.getId(), 0);
 
         assertEquals(reservationList.getTotalPages(), 1);
 
@@ -167,37 +206,57 @@ public class ReservationServiceTests {
 
         Reservation cancelledReservation = reservationService.getById(reservation.getId());
 
-        assertEquals(cancelledReservation.getStatus(),ReservationStatus.CANCELLED);
+        assertEquals(cancelledReservation.getStatus(), ReservationStatus.CANCELLED);
 
         Vehicle vehicleReserved = vehicleRepository.findOne(vehicle.getId());
 
-        assertEquals(vehicleReserved.getStatus(),VehicleStatus.AVAILABLE);
+        assertEquals(vehicleReserved.getStatus(), VehicleStatus.AVAILABLE);
 
     }
 
-    private Customer getCustomer() {
-        Customer customer = new Customer();
-        customer.setFullName("123");
-        customer.setNationality("nation");
-        customer.setLicenseNumber("321");
-        customer.setCountry("country");
-        return customer;
+    @Transactional
+    @Test
+    public void testCancelDelayedReservations() {
+        Employee employee = createEmployee();
+        Customer customer = createCustomer();
+        customer.setEmployee(employee);
+        Vehicle vehicle = createTestVehicle();
+        Reservation reservation = createReservation();
+
+        customerRepository.save(customer);
+        employeeRepository.save(employee);
+        vehicleRepository.save(vehicle);
+
+        reservationService.makeReservation(reservation,customer.getId(),vehicle);
+
+        List<String> delayedEmails = reservationService.cancelDelayedReservations();
+
+        assertEquals(delayedEmails.size(),0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
+        Date date = calendar.getTime();
+
+        reservation.setPickupDate(date);
+
+        System.out.println(new Date());
+        System.out.println(date);
+
+        reservationService.updateReservation(reservation);
+
+
+        delayedEmails = reservationService.cancelDelayedReservations();
+
+        assertEquals(delayedEmails.size(),1);
+
+        delayedEmails = reservationService.cancelDelayedReservations();
+
+        assertEquals(delayedEmails.size(),0);
+
+
+
     }
 
-
-    private Vehicle createTestVehicle() {
-        Vehicle vehicle = new Vehicle();
-
-        vehicle.setBrand("Toyota");
-        vehicle.setCondition("new");
-        vehicle.setDailyPrice(10);
-        vehicle.setFuelType(FuelType.PETROL);
-        vehicle.setModel("has bacl");
-        vehicle.setPlateNumber("1234");
-        vehicle.setSeatQuantity(4);
-        vehicle.setStatus(VehicleStatus.AVAILABLE);
-        vehicle.setType(VehicleType.Hatchback);
-        return vehicle;
-    }
 
 }
