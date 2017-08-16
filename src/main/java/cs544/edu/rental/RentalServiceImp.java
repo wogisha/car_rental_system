@@ -41,7 +41,7 @@ public class RentalServiceImp implements RentalService {
 
 		Vehicle vehicle = rent.getVehicle();
 		vehicle.setStatus(VehicleStatus.RENTED);
-
+		rent.setCustomer(reservation.getCustomer());
 		rent.setRentStatus(RentStatus.RENTED);
 
 		rentalRepository.save(rent);

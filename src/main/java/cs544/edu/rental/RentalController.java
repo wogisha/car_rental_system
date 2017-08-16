@@ -106,10 +106,10 @@ public class RentalController {
 			return "rental/Confirmation";
 		} else {
 			rentalService.saveRent(rent);
-			String custEmail = rent.getEmployee().getUsername(); 
-			emailService.sendSimpleMessage(custEmail, "Welcome" + custEmail,
-					"Welcome to our car rental Service!"
-					+ "Thank you for choosing our service! Have a nice and safe trip!");
+			String custEmail = rent.getCustomer().getEmployee().getUsername(); 
+//			emailService.sendSimpleMessage(custEmail, "Welcome" + custEmail,
+//					"Welcome to our car rental Service!"
+//					+ "Thank you for choosing our service! Have a nice and safe trip!");
 			return "redirect:/rental";
 		}
 	}
@@ -137,7 +137,7 @@ public class RentalController {
 		List<Rent> custList = rentalService.getCustomerReturnCar();
 		
 		for(Rent cust: custList) {
-			String custEmail = cust.getEmployee().getUsername();
+			String custEmail = cust.getCustomer().getEmployee().getUsername();
 			emailService.sendSimpleMessage(custEmail, "Thank you", "Thank you for using our services!");
 		}
 	}
