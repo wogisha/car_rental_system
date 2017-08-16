@@ -12,11 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import cs544.edu.entities.Reservation.NewReservation;
 import cs544.edu.entities.enums.FuelProvider;
 import cs544.edu.entities.enums.RentStatus;
 import cs544.edu.reservations.CustomFuture;

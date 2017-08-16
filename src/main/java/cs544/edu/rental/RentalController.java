@@ -105,9 +105,9 @@ public class RentalController {
 		} else {
 			rentalService.saveRent(rent);
 			String custName = rent.getReservation().getCustomer().getFullName(); 
-			emailService.sendSimpleMessage(custName, "Welcome" + custName,
-					"Welcome to our car rental Service!"
-					+ "Thank you for choosing our service! Have a nice and safe trip!");
+//			emailService.sendSimpleMessage(custName, "Welcome" + custName,
+//					"Welcome to our car rental Service!"
+//					+ "Thank you for choosing our service! Have a nice and safe trip!");
 			return "redirect:/rental";
 		}
 	}
